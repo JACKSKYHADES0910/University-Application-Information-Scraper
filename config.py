@@ -65,6 +65,14 @@ UNIVERSITY_INFO = {
         "list_url": "https://gs.hkbu.edu.hk/programmes",
         "allowed_domain": "hkbu.edu.hk"
     },
+    "cityu": {
+        "code": "HK003",
+        "name": "City University of Hong Kong",
+        "name_cn": "香港城市大学",
+        "base_url": "https://www.cityu.edu.hk",
+        "list_url": "https://www.cityu.edu.hk/pg/taught-postgraduate-programmes/list",
+        "allowed_domain": "cityu.edu.hk"
+    },
     "cuhk": {
         "code": "HK002",
         "name": "The Chinese University of Hong Kong",

@@ -7,6 +7,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Dict, Optional
 import time
+import re
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -90,14 +91,12 @@ class BaseSpider(ABC):
         只有在第一次访问时才会创建驱动实例
         """
         if self._driver is None:
-            print("🌐 正在启动浏览器...")
-            # #region agent log
-            import json, time as _t
-            _log_path = r"d:\Project\MySpiderProject\.cursor\debug.log"
-            with open(_log_path, "a", encoding="utf-8") as _f:
-                _f.write(json.dumps({"hypothesisId": "CALL", "location": "base_spider.py:driver", "message": "About to call get_driver", "data": {"headless": self.headless}, "timestamp": int(_t.time()*1000)}) + "\n")
-            # #endregion
-            self._driver = get_driver(self.headless)
+            if console:
+                with console.status("[bold cyan]🌐 正在启动浏览器 (Browser Launching)...", spinner="earth"):
+                    self._driver = get_driver(self.headless)
+            else:
+                print("🌐 正在启动浏览器...")
+                self._driver = get_driver(self.headless)
         return self._driver
     
     @property
@@ -214,6 +213,15 @@ class BaseSpider(ABC):
             print(f"⏱️ 总耗时: {time_str}")
             print("=" * 50)
     
+    def _clean_text(self, text: str) -> str:
+        """
+        清洗文本：去空白、换行
+        """
+        if not text:
+            return ""
+        # 替换多余空白
+        return re.sub(r'\s+', ' ', text).strip()
+
     def __enter__(self):
         """支持 with 语句"""
         return self

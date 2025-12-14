@@ -27,6 +27,7 @@ if sys.platform == 'win32':
 from spiders.base_spider import BaseSpider
 from spiders.hongkong import HKUSpider
 from spiders.hongkong.cuhk_spider import CUHKSpider
+from spiders.hongkong.cityu_spider import CityUSpider
 
 # 导入工具函数
 from utils.data_saver import save_excel, preview_data
@@ -43,6 +44,8 @@ from config import UNIVERSITY_INFO
 SPIDER_REGISTRY = {
     "hku": HKUSpider,
     "cuhk": CUHKSpider,
+    "cityu": CityUSpider,
+    # "hkbu": HKBUSpider,
     # "hkbu": HKBUSpider,
     # 添加新爬虫时在此注册:
     # "oxford": OxfordSpider,
@@ -105,8 +108,8 @@ def print_region_universities(region_key: str):
     for key, uni_info in UNIVERSITY_INFO.items():
         # 简单判断：根据 spiders 目录下的结构，判断该大学属于哪个地区
         # 这里我们假设已经在 config.py 中设置好了，或者通过文件夹结构判断
-        # 暂时使用简单判断：hku/cuhk 属于 hongkong
-        if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu"]:
+        # 暂时使用简单判断：hku/cuhk/cityu 属于 hongkong
+        if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu"]:
             region_universities[key] = uni_info
         # 可扩展其他地区
     
@@ -214,6 +217,9 @@ def run_spider(university_key: str, debug: bool = False):
         return
     
     print("\n" + "=" * 50)
+    print("✅ 确认成功！正在为您启动爬虫进程，首次运行可能需要几秒钟加载浏览器...")
+    print("⏳ 请耐心等待，不要关闭弹出的窗口。")
+    print("=" * 50 + "\n")
     
     # 使用 with 语句确保资源释放
     with spider_class(headless=not debug) as spider:
