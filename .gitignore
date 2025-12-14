@@ -34,3 +34,6 @@ output/
 # editor logs
 .cursor/
 *.log
+
+# notebooks / attachments
+attachment/
