@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 from typing import List, Dict, Optional
 import time
 import re
+import random
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -221,6 +222,13 @@ class BaseSpider(ABC):
             return ""
         # 替换多余空白
         return re.sub(r'\s+', ' ', text).strip()
+
+    def random_sleep(self, min_seconds: float = 1.0, max_seconds: float = 3.0) -> None:
+        """
+        随机休眠一段时间，模拟人类操作
+        """
+        sleep_time = random.uniform(min_seconds, max_seconds)
+        time.sleep(sleep_time)
 
     def __enter__(self):
         """支持 with 语句"""

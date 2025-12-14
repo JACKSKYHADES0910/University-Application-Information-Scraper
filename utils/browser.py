@@ -6,6 +6,7 @@
 
 import os
 import json
+import random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -86,11 +87,22 @@ def get_driver(headless: bool = True, fast_mode: bool = True) -> webdriver.Chrom
         chrome_options.add_argument("--window-size=1280,720")  # 减小窗口尺寸
     
     # --- 伪装配置 ---
-    chrome_options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
-    )
+    # --- 伪装配置 (随机 User-Agent) ---
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/121.0",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15"
+    ]
+    ua = random.choice(user_agents)
+    
+    # #region agent log
+    _debug_log("F", "browser.py:ua_config", "Selected User-Agent", {"ua": ua})
+    # #endregion
+    
+    chrome_options.add_argument(f"user-agent={ua}")
     
     # --- 快速模式额外优化 ---
     prefs = {

@@ -37,3 +37,4 @@ output/
 
 # notebooks / attachments
 attachment/
+.ipynb_checkpoints/
