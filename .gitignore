@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# venv
+.venv/
+venv/
+
+# env / secrets
+.env
+*.key
+*.pem
+
+# logs / outputs / data
+logs/
+output/
+outputs/
+data/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# outputs / generated files
+output/
+*.xlsx
+
+# editor logs
+.cursor/
+*.log
