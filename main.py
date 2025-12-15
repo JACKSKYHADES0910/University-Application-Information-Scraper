@@ -28,6 +28,7 @@ from spiders.base_spider import BaseSpider
 from spiders.hongkong import HKUSpider
 from spiders.hongkong.cuhk_spider import CUHKSpider
 from spiders.hongkong.cityu_spider import CityUSpider
+from spiders.hongkong.polyu_spider import PolyUSpider
 
 # 导入工具函数
 from utils.data_saver import save_excel, preview_data
@@ -45,6 +46,7 @@ SPIDER_REGISTRY = {
     "hku": HKUSpider,
     "cuhk": CUHKSpider,
     "cityu": CityUSpider,
+    "polyu": PolyUSpider,
     # "hkbu": HKBUSpider,
     # "hkbu": HKBUSpider,
     # 添加新爬虫时在此注册:
@@ -109,7 +111,7 @@ def print_region_universities(region_key: str):
         # 简单判断：根据 spiders 目录下的结构，判断该大学属于哪个地区
         # 这里我们假设已经在 config.py 中设置好了，或者通过文件夹结构判断
         # 暂时使用简单判断：hku/cuhk/cityu 属于 hongkong
-        if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu"]:
+        if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu", "polyu"]:
             region_universities[key] = uni_info
         # 可扩展其他地区
     

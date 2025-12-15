@@ -80,6 +80,14 @@ UNIVERSITY_INFO = {
         "base_url": "https://www.gs.cuhk.edu.hk",
         "list_url": "https://www.gs.cuhk.edu.hk/admissions/",
         "allowed_domain": "cuhk.edu.hk"
+    },
+    "polyu": {
+        "code": "HK004",
+        "name": "The Hong Kong Polytechnic University",
+        "name_cn": "香港理工大学",
+        "base_url": "https://www.polyu.edu.hk",
+        "list_url": "https://www.polyu.edu.hk/study/pg/taught-postgraduate/find-your-programmes-tpg",
+        "allowed_domain": "polyu.edu.hk"
     }
 }
 

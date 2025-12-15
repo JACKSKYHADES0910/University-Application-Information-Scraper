@@ -62,6 +62,8 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **The University of Hong Kong (HKU)** | `spiders/hongkong/hku_spider.py` | ✅ Stable | 100% | 完整支持列表与详情抓取 |
 | **The Chinese University of Hong Kong (CUHK)** | `spiders/hongkong/cuhk_spider.py` | ✅ Stable | 95% | 支持 Hash 路由与弹窗解析 |
+| **City University of Hong Kong (CityU)** | `spiders/hongkong/cityu_spider.py` | ✅ Stable | 100% | 强制有头模式绕过 Incapsula WAF |
+| **The Hong Kong Polytechnic University (PolyU)** | `spiders/hongkong/polyu_spider.py` | ✅ Stable | 100% | 支持博士项目过滤 |
 | **Hong Kong Baptist University (HKBU)** | - | 🚧 Planned | - | 计划中 |
 | **UK / USA Universities** | - | ⏳ TBD | - | 待开发 |
 

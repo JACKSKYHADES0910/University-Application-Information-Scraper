@@ -43,7 +43,7 @@ class CityUSpider(BaseSpider):
             
             # 第二阶段：并发抓取详情
             progress = CrawlerProgress(
-                max_workers=self.university_info.get("max_workers", 12)
+                max_workers=10  # 根据用户强劲配置 (12600KF/32G) 调高并发
             )
             
             self.results = progress.run_tasks(
@@ -161,7 +161,8 @@ class CityUSpider(BaseSpider):
         result["项目申请链接"] = self.apply_url
         
         # 启动临时浏览器
-        driver = get_driver(headless=True)
+        # CityU 详情页也需要 Headful 模式
+        driver = get_driver(headless=False)
         
         try:
             driver.get(item['link'])
@@ -200,18 +201,44 @@ class CityUSpider(BaseSpider):
         """
         尝试提取 Application Deadline
         """
-        # 策略 1: 查找包含 "Application Deadline" 的表格行
+        # 策略 0: 最精准匹配 - 使用 prog_admission 类 (用户提供的特定结构)
         try:
-            # 查找所有包含 "Deadline" 的 th 或 td
+            # 直接定位包含 prog_admission 类的 div
+            # <div class="prog_info_block prog_admission">
+            admission_block = driver.find_element(By.CSS_SELECTOR, "div.prog_info_block.prog_admission")
+            content_span = admission_block.find_element(By.CSS_SELECTOR, "span.prog_content")
+            
+            raw_text = content_span.get_attribute("textContent").strip()
+            # 常见内容: "Local & Non-local : 28 Feb 2026"
+            if "Deadline" in raw_text or "Non-local" in raw_text or ":" in raw_text:
+                 if ":" in raw_text:
+                     return raw_text.split(":", 1)[1].strip()
+                 return raw_text
+        except:
+             pass
+
+        # 策略 1: 遍历 prog_info_block 查找 Application Deadline 标题
+        try:
+            h2_labels = driver.find_elements(By.CSS_SELECTOR, "div.prog_info_block h2.prog_label")
+            for h2 in h2_labels:
+                if "Application Deadline" in h2.text:
+                    parent = h2.find_element(By.XPATH, "./parent::*")
+                    content_span = parent.find_element(By.CSS_SELECTOR, "span.prog_content")
+                    if content_span:
+                        raw_text = content_span.get_attribute("textContent").strip()
+                        if ":" in raw_text:
+                            return raw_text.split(":", 1)[1].strip()
+                        return raw_text
+        except:
+            pass
+
+        # 策略 2: 查找表格行 (备用)
+        try:
             deadline_labels = driver.find_elements(By.XPATH, "//*[contains(text(), 'Application Deadline')]")
             for label in deadline_labels:
-                # 尝试找同行的下一个 td，或者父级 tr
                 try:
-                    # 检查是否是表格的一部分
                     parent_tr = label.find_element(By.XPATH, "./ancestor::tr")
-                    # 获取该行所有文本
                     row_text = parent_tr.text
-                    # 简单的文本处理: "Application Deadline 30 April 2024" -> "30 April 2024"
                     clean_text = row_text.replace("Application Deadline", "").replace("Closing Date", "").strip()
                     if len(clean_text) > 5:
                         return clean_text
@@ -219,17 +246,30 @@ class CityUSpider(BaseSpider):
                     continue
         except:
             pass
-            
-        # 策略 2: 在全文中搜索
-        # (简单实现，后续可根据实际 HTML 优化)
-        lines = page_text.split('\n')
-        for line in lines:
+
+        # 策略 3: 基于文本行的上下文查找
+        lines = [line.strip() for line in page_text.split('\n') if line.strip()]
+        
+        for i, line in enumerate(lines):
+            # 检查当前行是否包含关键词
             if "Application Deadline" in line or "Closing Date" in line:
-                # 简单的截取
-                parts = line.split(":")
-                if len(parts) > 1:
+                # 情况 A: Deadline 在同一行
+                if ":" in line:
+                    parts = line.split(":", 1)
                     val = parts[1].strip()
                     if len(val) > 5 and len(val) < 100:
                         return val
-                        
+                
+                # 情况 B: Deadline 在下一行
+                if i + 1 < len(lines):
+                    next_line = lines[i+1]
+                    if "Non-local" in next_line or "Local" in next_line or any(m in next_line for m in ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]):
+                         return next_line
+            
+            # 情况 C: 直接查找 "Non-local Applicants" 所在的行
+            if "Non-local Applicants" in line and ":" in line:
+                 parts = line.split(":", 1)
+                 val = parts[1].strip()
+                 return val
+
         return "N/A"
