@@ -3,7 +3,8 @@
 研究生项目信息爬虫 - 主程序入口
 
 支持的大学:
-    - 香港地区: hku, cuhk
+    - 香港地区: hku, cuhk, cityu, polyu
+    - 澳大利亚地区: anu
     - 英国地区: (待实现)
     - 美国地区: (待实现)
 
@@ -29,6 +30,7 @@ from spiders.hongkong import HKUSpider
 from spiders.hongkong.cuhk_spider import CUHKSpider
 from spiders.hongkong.cityu_spider import CityUSpider
 from spiders.hongkong.polyu_spider import PolyUSpider
+from spiders.australia.anu_spider import ANUSpider
 
 # 导入工具函数
 from utils.data_saver import save_excel, preview_data
@@ -47,7 +49,7 @@ SPIDER_REGISTRY = {
     "cuhk": CUHKSpider,
     "cityu": CityUSpider,
     "polyu": PolyUSpider,
-    # "hkbu": HKBUSpider,
+    "anu": ANUSpider,
     # "hkbu": HKBUSpider,
     # 添加新爬虫时在此注册:
     # "oxford": OxfordSpider,
@@ -63,6 +65,10 @@ REGION_INFO = {
     "hongkong": {
         "name": "🇭🇰 香港地区",
         "folder": "hongkong"
+    },
+    "australia": {
+        "name": "🇦🇺 澳大利亚地区",
+        "folder": "australia"
     },
     "uk": {
         "name": "🇬🇧 英国地区",
@@ -113,6 +119,8 @@ def print_region_universities(region_key: str):
         # 暂时使用简单判断：hku/cuhk/cityu 属于 hongkong
         if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu", "polyu"]:
             region_universities[key] = uni_info
+        elif region_key == "australia" and key in ["anu"]:
+            region_universities[key] = uni_info
         # 可扩展其他地区
     
     if not region_universities:
@@ -151,7 +159,7 @@ def interactive_select_university() -> str:
     print_available_regions()
     
     while True:
-        region_choice = input("\n🔹 请输入地区编号 (1-3): ").strip()
+        region_choice = input("\n🔹 请输入地区编号 (1-4): ").strip()
         
         if not region_choice.isdigit():
             print("⚠️ 请输入有效的数字")

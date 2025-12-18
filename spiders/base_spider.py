@@ -83,7 +83,7 @@ class BaseSpider(ABC):
         # 记录开始时间
         self.start_time: Optional[float] = None
         
-        print(f"🎯 初始化爬虫: {self.university_info['name_cn']} ({self.university_info['name']})")
+        print(f"[-] 初始化爬虫: {self.university_info['name_cn']} ({self.university_info['name']})")
     
     @property
     def driver(self) -> WebDriver:

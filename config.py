@@ -88,6 +88,14 @@ UNIVERSITY_INFO = {
         "base_url": "https://www.polyu.edu.hk",
         "list_url": "https://www.polyu.edu.hk/study/pg/taught-postgraduate/find-your-programmes-tpg",
         "allowed_domain": "polyu.edu.hk"
+    },
+    "anu": {
+        "code": "AUS006",
+        "name": "The Australian National University",
+        "name_cn": "澳大利亚国立大学",
+        "base_url": "https://www.anu.edu.au",
+        "list_url": "https://programsandcourses.anu.edu.au/catalogue?FilterByPrograms=true&Source=Breadcrumb",
+        "allowed_domain": "anu.edu.au"
     }
 }
 
