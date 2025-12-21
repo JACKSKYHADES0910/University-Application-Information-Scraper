@@ -65,7 +65,10 @@
 | **City University of Hong Kong (CityU)** | `spiders/hongkong/cityu_spider.py` | ✅ Stable | 100% | 强制有头模式绕过 Incapsula WAF |
 | **The Hong Kong Polytechnic University (PolyU)** | `spiders/hongkong/polyu_spider.py` | ✅ Stable | 100% | 支持博士项目过滤 |
 | **Hong Kong Baptist University (HKBU)** | - | 🚧 Planned | - | 计划中 |
-| **UK / USA Universities** | - | ⏳ TBD | - | 待开发 |
+| **The Australian National University (ANU)** | `spiders/australia/anu_spider.py` | ✅ Stable | 100% | 澳洲国立大学，完整支持 |
+| **Imperial College London** | `spiders/uk/imperial_spider.py` | ✅ Stable | 100% | 英国G5，支持注册/登录链接提取 |
+| **The University of Manchester** | `spiders/uk/manchester_spider.py` | ✅ Stable | 100% | 英国红砖，支持分阶段 Deadline 提取 |
+| **USA Universities** | - | ⏳ TBD | - | 待开发 |
 
 ---
 
