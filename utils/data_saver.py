@@ -288,10 +288,11 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
     # 定义要显示的列及其宽度
     display_columns = [
         ("序号", 4),
-        ("项目名称", 35),
-        ("项目官网链接", 20),
-        ("项目申请链接", 20),
-        ("项目deadline", 25),
+        ("项目名称", 30),
+        ("项目官网链接", 18),
+        ("申请注册链接", 16),
+        ("申请登录链接", 16),
+        ("项目deadline", 22),
     ]
     
     # 添加列
@@ -302,27 +303,30 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
     for idx, row in df.iterrows():
         # 处理链接列 - 使用 Text 对象创建可点击链接（避免 markup 解析错误）
         official_link = str(row.get("项目官网链接", "N/A"))
-        apply_link = str(row.get("项目申请链接", "N/A"))
+        register_link = str(row.get("申请注册链接", "N/A"))
+        login_link = str(row.get("申请登录链接", "N/A"))
         
         # 创建可点击链接（使用 Text 对象，更安全）
         official_display = _create_clickable_link(official_link, "🔗 点击查看")
-        apply_display = _create_clickable_link(apply_link, "🔗 点击申请")
+        register_display = _create_clickable_link(register_link, "🔗 注册")
+        login_display = _create_clickable_link(login_link, "🔗 登录")
         
         # 项目名称截断并转义
         prog_name_raw = str(row.get("项目名称", ""))
-        prog_name = prog_name_raw[:33]
-        if len(prog_name_raw) > 33:
+        prog_name = prog_name_raw[:28]
+        if len(prog_name_raw) > 28:
             prog_name += "..."
         prog_name = rich_escape(prog_name)  # 转义特殊字符
         
         # deadline 也需要转义
-        deadline = rich_escape(str(row.get("项目deadline", "N/A"))[:25])
+        deadline = rich_escape(str(row.get("项目deadline", "N/A"))[:20])
         
         table.add_row(
             str(idx + 1),
             prog_name,
             official_display,
-            apply_display,
+            register_display,
+            login_display,
             deadline
         )
     
@@ -334,7 +338,7 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
     # 打印提示
     console.print(
         Panel(
-            "💡 [bold green]提示[/bold green]: 点击 [cyan]🔗 点击查看[/cyan] 或 [cyan]🔗 点击申请[/cyan] 可在浏览器中打开链接验证爬取结果",
+            "💡 [bold green]提示[/bold green]: 点击 [cyan]🔗 点击查看[/cyan]、[cyan]🔗 注册[/cyan] 或 [cyan]🔗 登录[/cyan] 可在浏览器中打开链接验证爬取结果",
             title="链接验证",
             border_style="green"
         )

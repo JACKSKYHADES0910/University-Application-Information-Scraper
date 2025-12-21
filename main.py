@@ -5,7 +5,7 @@
 支持的大学:
     - 香港地区: hku, cuhk, cityu, polyu
     - 澳大利亚地区: anu
-    - 英国地区: (待实现)
+    - 英国地区: imperial
     - 美国地区: (待实现)
 
 使用方法:
@@ -31,6 +31,8 @@ from spiders.hongkong.cuhk_spider import CUHKSpider
 from spiders.hongkong.cityu_spider import CityUSpider
 from spiders.hongkong.polyu_spider import PolyUSpider
 from spiders.australia.anu_spider import ANUSpider
+from spiders.uk.imperial_spider import ImperialSpider
+from spiders.uk.manchester_spider import ManchesterSpider
 
 # 导入工具函数
 from utils.data_saver import save_excel, preview_data
@@ -50,6 +52,8 @@ SPIDER_REGISTRY = {
     "cityu": CityUSpider,
     "polyu": PolyUSpider,
     "anu": ANUSpider,
+    "imperial": ImperialSpider,
+    "manchester": ManchesterSpider,
     # "hkbu": HKBUSpider,
     # 添加新爬虫时在此注册:
     # "oxford": OxfordSpider,
@@ -120,6 +124,8 @@ def print_region_universities(region_key: str):
         if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu", "polyu"]:
             region_universities[key] = uni_info
         elif region_key == "australia" and key in ["anu"]:
+            region_universities[key] = uni_info
+        elif region_key == "uk" and key in ["imperial", "manchester"]:
             region_universities[key] = uni_info
         # 可扩展其他地区
     
