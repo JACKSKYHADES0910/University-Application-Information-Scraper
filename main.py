@@ -31,6 +31,7 @@ from spiders.hongkong.cuhk_spider import CUHKSpider
 from spiders.hongkong.cityu_spider import CityUSpider
 from spiders.hongkong.polyu_spider import PolyUSpider
 from spiders.australia.anu_spider import ANUSpider
+from spiders.australia.uwa_spider import UWASpider
 from spiders.uk.imperial_spider import ImperialSpider
 from spiders.uk.manchester_spider import ManchesterSpider
 
@@ -52,6 +53,7 @@ SPIDER_REGISTRY = {
     "cityu": CityUSpider,
     "polyu": PolyUSpider,
     "anu": ANUSpider,
+    "uwa": UWASpider,
     "imperial": ImperialSpider,
     "manchester": ManchesterSpider,
     # "hkbu": HKBUSpider,
@@ -123,7 +125,7 @@ def print_region_universities(region_key: str):
         # 暂时使用简单判断：hku/cuhk/cityu 属于 hongkong
         if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu", "polyu"]:
             region_universities[key] = uni_info
-        elif region_key == "australia" and key in ["anu"]:
+        elif region_key == "australia" and key in ["anu", "uwa"]:
             region_universities[key] = uni_info
         elif region_key == "uk" and key in ["imperial", "manchester"]:
             region_universities[key] = uni_info

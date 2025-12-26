@@ -119,6 +119,16 @@ UNIVERSITY_INFO = {
         # 统一的申请链接(全校共用)
         "apply_register_url": "https://pgapplication.manchester.ac.uk/psc/apply/EMPLOYEE/SA/c/CIBAA_MNU.CIBAA_REG_CMP.GBL?Page=CIBAA_REG_PG&Action=A",
         "apply_login_url": "https://pgapplication.manchester.ac.uk/psc/apply/EMPLOYEE/SA/c/CIBAA_MNU.UMOAA_LOGIN_CMP.GBL?"
+    },
+    "uwa": {
+        "code": "AUS007",
+        "name": "The University of Western Australia",
+        "name_cn": "西澳大学",
+        "base_url": "https://www.uwa.edu.au",
+        "list_url": "https://www.search.uwa.edu.au/s/search.html?f.Tabs%7Ccourses=Courses&f.Level+of+study%7CcourseStudyLevel=postgraduate&collection=uowa%7Esp-search",
+        "allowed_domain": "uwa.edu.au",
+        "apply_register_url": "https://www.uwa.edu.au/study/login",
+        "apply_login_url": "https://www.uwa.edu.au/study/login"
     }
 }
 
