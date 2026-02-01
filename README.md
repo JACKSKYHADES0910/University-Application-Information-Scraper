@@ -58,18 +58,84 @@
 
 ## 🏫 支持学校矩阵 (Supported Universities)
 
-| 学校 (Region) | 对应爬虫 (Spider Path) | 状态 (Status) | 字段覆盖率 | 备注 (Notes) |
-| :--- | :--- | :--- | :--- | :--- |
-| **The University of Hong Kong (HKU)** | `spiders/hongkong/hku_spider.py` | ✅ Stable | 100% | 完整支持列表与详情抓取 |
-| **The Chinese University of Hong Kong (CUHK)** | `spiders/hongkong/cuhk_spider.py` | ✅ Stable | 95% | 支持 Hash 路由与弹窗解析 |
-| **City University of Hong Kong (CityU)** | `spiders/hongkong/cityu_spider.py` | ✅ Stable | 100% | 强制有头模式绕过 Incapsula WAF |
-| **The Hong Kong Polytechnic University (PolyU)** | `spiders/hongkong/polyu_spider.py` | ✅ Stable | 100% | 支持博士项目过滤 |
-| **Hong Kong Baptist University (HKBU)** | - | 🚧 Planned | - | 计划中 |
-| **The Australian National University (ANU)** | `spiders/australia/anu_spider.py` | ✅ Stable | 100% | 澳洲国立大学，完整支持 |
-| **Imperial College London** | `spiders/uk/imperial_spider.py` | ✅ Stable | 100% | 英国G5，支持注册/登录链接提取 |
-| **The University of Manchester** | `spiders/uk/manchester_spider.py` | ✅ Stable | 100% | 英国红砖，支持分阶段 Deadline 提取 |
-| **USA Universities** | - | ⏳ TBD | - | 待开发 |
-| **University of Connecticut** | `spiders/usa/uconn_spider.py` | ✅ Stable | 95% | 支持分类筛选与多模式 Deadline 提取 |
+> 目前支持 **37 所大学**，覆盖 5 个地区
+
+<details>
+<summary>🇺🇸 <b>USA (16 所)</b></summary>
+
+| 学校 | Spider | 状态 |
+|:---|:---|:---|
+| Stanford University | `usa/stanford_spider.py` | ✅ Stable |
+| MIT | `usa/mit_spider.py` | ✅ Stable |
+| Harvard University | `usa/harvard_spider.py` | ✅ Stable |
+| NYU | `usa/nyu_spider.py` | ✅ Stable |
+| University of Connecticut | `usa/uconn_spider.py` | ✅ Stable |
+| Vanderbilt University | `usa/vanderbilt_spider.py` | ✅ Stable |
+| Emory University | `usa/emory_spider.py` | ✅ Stable |
+| University of Delaware | `usa/delaware_spider.py` | ✅ Stable |
+| Duke Kunshan University | `usa/duke_kunshan_spider.py` | ✅ Stable |
+| Indiana University Bloomington | `usa/indiana_bloomington_spider.py` | ✅ Stable |
+| Iowa State University | `usa/iowa_state_spider.py` | ✅ Stable |
+| University of Kansas | `usa/kansas_spider.py` | ✅ Stable |
+| University of Maryland | `usa/maryland_spider.py` | ✅ Stable |
+| Oregon State University | `usa/oregon_state_spider.py` | ✅ Stable |
+| UC Santa Cruz | `usa/ucsc_spider.py` | ✅ Stable |
+| University of Virginia | `usa/virginia_spider.py` | ✅ Stable |
+
+</details>
+
+<details>
+<summary>🇬🇧 <b>UK (10 所)</b></summary>
+
+| 学校 | Spider | 状态 |
+|:---|:---|:---|
+| Imperial College London | `uk/imperial_spider.py` | ✅ Stable |
+| University of Manchester | `uk/manchester_spider.py` | ✅ Stable |
+| University of Aberdeen | `uk/aberdeen_spider.py` | ✅ Stable |
+| Brunel University London | `uk/brunel_spider.py` | ✅ Stable |
+| Manchester Metropolitan University | `uk/mmu_spider.py` | ✅ Stable |
+| Queen's University Belfast | `uk/qub_spider.py` | ✅ Stable |
+| Royal Holloway | `uk/royalholloway_spider.py` | ✅ Stable |
+| University of Strathclyde | `uk/strathclyde_spider.py` | ✅ Stable |
+| University of East Anglia | `uk/uea_spider.py` | ✅ Stable |
+| Ulster University | `uk/ulster_spider.py` | ✅ Stable |
+
+</details>
+
+<details>
+<summary>🇭🇰 <b>Hong Kong (4 所)</b></summary>
+
+| 学校 | Spider | 状态 |
+|:---|:---|:---|
+| The University of Hong Kong (HKU) | `hongkong/hku_spider.py` | ✅ Stable |
+| The Chinese University of Hong Kong (CUHK) | `hongkong/cuhk_spider.py` | ✅ Stable |
+| City University of Hong Kong (CityU) | `hongkong/cityu_spider.py` | ✅ Stable |
+| The Hong Kong Polytechnic University (PolyU) | `hongkong/polyu_spider.py` | ✅ Stable |
+
+</details>
+
+<details>
+<summary>🇦🇺 <b>Australia (3 所)</b></summary>
+
+| 学校 | Spider | 状态 |
+|:---|:---|:---|
+| The Australian National University (ANU) | `australia/anu_spider.py` | ✅ Stable |
+| Deakin University | `australia/deakin_spider.py` | ✅ Stable |
+| University of Western Australia | `australia/uwa_spider.py` | ✅ Stable |
+
+</details>
+
+<details>
+<summary>🇨🇦 <b>Canada (4 所)</b></summary>
+
+| 学校 | Spider | 状态 |
+|:---|:---|:---|
+| University of Calgary | `ca/calgary_spider.py` | ✅ Stable |
+| University of Guelph | `ca/guelph_spider.py` | ✅ Stable |
+| University of Manitoba | `ca/manitoba_spider.py` | ✅ Stable |
+| Université de Montréal | `ca/montreal_spider.py` | ✅ Stable |
+
+</details>
 
 ---
 
