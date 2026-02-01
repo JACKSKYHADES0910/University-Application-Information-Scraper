@@ -17,6 +17,15 @@
 import sys
 import argparse
 import os
+
+# 强制设置输出编码为 UTF-8，解决 Windows 下的 UnicodeEncodeError
+if sys.platform.startswith('win'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        # Python < 3.7 or filtered stdout
+        pass
+
 from typing import Optional, Type, Dict, List
 
 # 设置标准输出编码为 UTF-8（解决 Windows 控制台 emoji 显示问题）
@@ -43,6 +52,28 @@ from spiders.uk.brunel_spider import BrunelSpider
 from spiders.uk.mmu_spider import MMUSpider
 from spiders.uk.royalholloway_spider import RoyalHollowaySpider
 from spiders.uk.ulster_spider import UlsterSpider
+from spiders.usa.harvard_spider import HarvardSpider
+from spiders.usa.mit_spider import MITSpider
+from spiders.usa.mit_spider import MITSpider
+from spiders.usa.stanford_spider import StanfordSpider
+from spiders.usa.nyu_spider import NYUSpider
+from spiders.usa.duke_kunshan_spider import DukeKunshanSpider
+from spiders.usa.maryland_spider import MarylandSpider
+from spiders.usa.emory_spider import EmorySpider
+from spiders.usa.vanderbilt_spider import VanderbiltSpider
+from spiders.usa.indiana_bloomington_spider import IndianaBloomingtonSpider
+from spiders.usa.virginia_spider import VirginiaSpider
+from spiders.usa.virginia_spider import VirginiaSpider
+from spiders.usa.ucsc_spider import UCSCSpider
+from spiders.usa.uconn_spider import UConnSpider
+from spiders.usa.kansas_spider import KansasSpider
+from spiders.usa.delaware_spider import DelawareSpider
+from spiders.usa.iowa_state_spider import IowaStateSpider
+from spiders.usa.oregon_state_spider import OregonStateSpider
+from spiders.ca.montreal_spider import MontrealSpider
+from spiders.ca.calgary_spider import CalgarySpider
+from spiders.ca.manitoba_spider import ManitobaSpider
+from spiders.ca.guelph_spider import GuelphSpider
 
 # 导入工具函数
 from utils.data_saver import save_excel, preview_data
@@ -74,6 +105,27 @@ SPIDER_REGISTRY = {
     "royalholloway": RoyalHollowaySpider,
     "ulster": UlsterSpider,
     "deakin": DeakinSpider,
+    "harvard": HarvardSpider,
+    "mit": MITSpider,
+    "stanford": StanfordSpider,
+    "nyu": NYUSpider,
+    "duke_kunshan": DukeKunshanSpider,
+    "duke_kunshan": DukeKunshanSpider,
+    "maryland": MarylandSpider,
+    "emory": EmorySpider,
+    "vanderbilt": VanderbiltSpider,
+    "indiana_bloomington": IndianaBloomingtonSpider,
+    "virginia": VirginiaSpider,
+    "ucsc": UCSCSpider,
+    "uconn": UConnSpider,
+    "kansas": KansasSpider,
+    "delaware": DelawareSpider,
+    "iowa_state": IowaStateSpider,
+    "oregon_state": OregonStateSpider,
+    "montreal": MontrealSpider,
+    "calgary": CalgarySpider,
+    "manitoba": ManitobaSpider,
+    "guelph": GuelphSpider,
     # "hkbu": HKBUSpider,
     # 添加新爬虫时在此注册:
     # "oxford": OxfordSpider,
@@ -101,6 +153,10 @@ REGION_INFO = {
     "usa": {
         "name": "🇺🇸 美国地区",
         "folder": "usa"
+    },
+    "canada": {
+        "name": "🇨🇦 加拿大地区",
+        "folder": "ca"
     }
 }
 
@@ -108,10 +164,10 @@ REGION_INFO = {
 def print_banner():
     """打印程序横幅"""
     print("""
-╔══════════════════════════════════════════════════════════════╗
-║          🎓 研究生项目信息爬虫 v1.0                          ║
-║          Graduate Program Spider                              ║
-╚══════════════════════════════════════════════════════════════╝
+╔═════════════════════════════════════════════════════════════════════════╗
+║                  🎓 研究生项目信息爬虫 v1.0                             ║
+║                  Graduate Program Spider                                ║
+╚═════════════════════════════════════════════════════════════════════════╝
     """)
 
 
@@ -124,6 +180,26 @@ def print_available_regions():
         print(f"  [{idx}] {region_info['name']}")
     
     print("-" * 40)
+    print("  [q] 退出程序")
+
+
+def get_display_width(text: str) -> int:
+    """计算文本的显示宽度（中文占2字符，英文占1字符）"""
+    width = 0
+    for char in text:
+        if ord(char) > 127:
+            width += 2
+        else:
+            width += 1
+    return width
+
+def pad_text(text: str, width: int) -> str:
+    """根据显示宽度填充空格"""
+    display_width = get_display_width(text)
+    padding = width - display_width
+    if padding < 0:
+        padding = 0
+    return text + " " * padding
 
 
 def print_region_universities(region_key: str):
@@ -133,31 +209,46 @@ def print_region_universities(region_key: str):
         return
     
     print(f"\n📚 {region_info['name']} - 可用大学列表:")
-    print("-" * 60)
+    print("-" * 105)
     
-    # 筛选该地区的大学（根据 spiders 下的文件夹结构）
+    # 筛选该地区的大学（根据 spiders 文件夹结构）
     region_universities = {}
     for key, uni_info in UNIVERSITY_INFO.items():
-        # 简单判断：根据 spiders 目录下的结构，判断该大学属于哪个地区
-        # 这里我们假设已经在 config.py 中设置好了，或者通过文件夹结构判断
-        # 暂时使用简单判断：hku/cuhk/cityu 属于 hongkong
         if region_key == "hongkong" and key in ["hku", "cuhk", "hkbu", "cityu", "polyu"]:
             region_universities[key] = uni_info
         elif region_key == "australia" and key in ["anu", "uwa", "deakin"]:
             region_universities[key] = uni_info
         elif region_key == "uk" and key in ["imperial", "manchester", "qub", "aberdeen", "uea", "strathclyde", "brunel", "mmu", "royalholloway", "ulster"]:
             region_universities[key] = uni_info
-        # 可扩展其他地区
+        elif region_key == "usa" and key in ["harvard", "mit", "stanford", "nyu", "duke_kunshan", "maryland", "emory", "vanderbilt", "indiana_bloomington", "virginia", "ucsc", "uconn", "kansas", "delaware", "iowa_state", "oregon_state"]:
+            region_universities[key] = uni_info
+        elif region_key == "canada" and key in ["montreal", "calgary", "manitoba", "guelph"]:
+            region_universities[key] = uni_info
     
     if not region_universities:
         print("  ⚠️ 该地区暂无可用大学")
         return
     
+    # 打印表头
+    header_key = pad_text("代码 (Code)", 22)
+    header_cn = pad_text("中文名称 (Name CN)", 25)
+    header_en = pad_text("英文名称 (Name EN)", 42)
+    print(f"  {header_key} | {header_cn} | {header_en} | 状态")
+    print("-" * 105)
+
     for key, info in region_universities.items():
         status = "✅ 已实现" if key in SPIDER_REGISTRY else "⏳ 待实现"
-        print(f"  [{key:6}] {info['name_cn']:15} | {info['name']:40} | {status}")
+        
+        # 使用自定义填充函数
+        key_str = pad_text(f"[{key}]", 22)
+        name_cn_str = pad_text(info['name_cn'], 25)
+        name_en_str = pad_text(info['name'], 42)
+        
+        print(f"  {key_str} | {name_cn_str} | {name_en_str} | {status}")
     
-    print("-" * 60)
+    print("-" * 105)
+    print("  [0] 返回上级菜单")
+    print("  [q] 退出程序")
     return region_universities
 
 
@@ -174,18 +265,22 @@ def get_spider_class(university_key: str) -> Optional[Type[BaseSpider]]:
     return SPIDER_REGISTRY.get(university_key.lower())
 
 
-def interactive_select_university() -> str:
+def interactive_select_university() -> Optional[str]:
     """
     交互式选择地区和大学
     
     返回:
-        str: 用户选择的大学标识
+        Optional[str]: 用户选择的大学标识，如果退出则返回 None
     """
-    # 第一步：选择地区
-    print_available_regions()
-    
     while True:
-        region_choice = input("\n🔹 请输入地区编号 (1-4): ").strip()
+        # 第一步：选择地区
+        print_available_regions()
+        
+        region_choice = input("\n🔹 请输入地区编号 (1-4, q退出): ").strip().lower()
+        
+        if region_choice == 'q':
+            print("👋 已退出程序")
+            sys.exit(0)
         
         if not region_choice.isdigit():
             print("⚠️ 请输入有效的数字")
@@ -198,30 +293,37 @@ def interactive_select_university() -> str:
         
         # 获取选中的地区
         region_key = list(REGION_INFO.keys())[region_idx - 1]
-        break
-    
-    # 第二步：选择该地区的大学
-    region_universities = print_region_universities(region_key)
-    
-    if not region_universities:
-        print("❌ 该地区暂无可用大学")
-        return None
-    
-    while True:
-        uni_choice = input(f"\n🔹 请输入大学代码 (如 hku): ").strip().lower()
         
-        if not uni_choice:
-            print("⚠️ 输入不能为空，请重试")
-            continue
-        
-        if uni_choice not in region_universities:
-            print(f"⚠️ 该地区没有代码为 '{uni_choice}' 的大学，请重试")
-            continue
-        
-        if uni_choice in SPIDER_REGISTRY:
-            return uni_choice
-        else:
-            print(f"⚠️ [{uni_choice}] 的爬虫尚未实现，请选择其他大学")
+        # 第二步：选择该地区的大学
+        while True:
+            region_universities = print_region_universities(region_key)
+            
+            if not region_universities:
+                print("❌ 该地区暂无可用大学")
+                break
+            
+            uni_choice = input(f"\n🔹 请输入大学代码 (如 hku, 0返回, q退出): ").strip().lower()
+            
+            if uni_choice == 'q':
+                print("👋 已退出程序")
+                sys.exit(0)
+                
+            if uni_choice == '0':
+                break # Break inner loop, return to region selection
+            
+            if not uni_choice:
+                print("⚠️ 输入不能为空，请重试")
+                continue
+            
+            if uni_choice not in region_universities:
+                print(f"⚠️ 该地区没有代码为 '{uni_choice}' 的大学，请重试")
+                continue
+            
+            if uni_choice in SPIDER_REGISTRY:
+                return uni_choice
+            else:
+                print(f"⚠️ [{uni_choice}] 的爬虫尚未实现，请选择其他大学")
+
 
 
 def run_spider(university_key: str, debug: bool = False):

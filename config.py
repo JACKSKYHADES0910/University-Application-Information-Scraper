@@ -14,8 +14,7 @@ EXCEL_COLUMNS = [
     "项目名称",      # 硕士/博士项目名称
     "学院/学习领域",  # 统一字段：按学院分类→Faculty，按学习领域分类→Study Area
     "项目官网链接",   # 项目详情页链接
-    "申请注册链接",   # 新用户注册入口
-    "申请登录链接",   # 已有账户登录入口
+    "申请链接",       # 统一申请入口（注册/登录合并）
     "项目opendate",  # 申请开放日期
     "项目deadline",  # 申请截止日期
     "学生案例",      # 成功案例(预留字段)
@@ -220,6 +219,200 @@ UNIVERSITY_INFO = {
         "allowed_domain": "deakin.edu.au",
         "apply_register_url": "https://student-deakin.studylink.com/index.cfm?event=registration.form",
         "apply_login_url": "https://student-deakin.studylink.com/index.cfm?event=security.showLogin&msg=eventsecured&fr=sp&en=default"
+    },
+    "harvard": {
+        "code": "US002",
+        "name": "Harvard University",
+        "name_cn": "哈佛大学",
+        "base_url": "https://www.harvard.edu",
+        "list_url": "https://www.harvard.edu/programs/?degree_levels=graduate",
+        "allowed_domain": "harvard.edu",
+        "apply_register_url": "N/A",  # Harvard uses school-specific application systems
+        "apply_login_url": "N/A"
+    },
+    "mit": {
+        "code": "US001",
+        "name": "Massachusetts Institute of Technology",
+        "name_cn": "麻省理工学院",
+        "base_url": "https://oge.mit.edu",
+        "list_url": "https://oge.mit.edu/graduate-admissions/programs/fields-of-study/",
+        "allowed_domain": "mit.edu",
+        "apply_register_url": "N/A",  # Decentralized
+        "apply_login_url": "N/A"
+    },
+    "stanford": {
+        "code": "US003",
+        "name": "Stanford University",
+        "name_cn": "斯坦福大学",
+        "base_url": "https://gradadmissions.stanford.edu",
+        "list_url": "https://gradadmissions.stanford.edu/programs",
+        "allowed_domain": "stanford.edu",
+        "apply_register_url": "https://applygrad.stanford.edu/account/register?r=/portal/grad-app",
+        "apply_login_url": "https://applygrad.stanford.edu/portal/grad-app"
+    },
+    "nyu": {
+        "code": "US018",
+        "name": "New York University",
+        "name_cn": "纽约大学",
+        "base_url": "https://bulletins.nyu.edu",
+        "list_url": "https://bulletins.nyu.edu/programs/#filter=.filter_55",
+        "allowed_domain": "nyu.edu",
+        "apply_register_url": "https://admissions.stern.nyu.edu/apply/?sr=af9314e5-b47a-4166-b75c-e14a92e7f632&utm_source=site_5_de&utm_medium=top&utm_campaign=links&utm_term=MSA&utm_content=App",
+        "apply_login_url": "https://admissions.stern.nyu.edu/apply/?sr=af9314e5-b47a-4166-b75c-e14a92e7f632&utm_source=site_5_de&utm_medium=top&utm_campaign=links&utm_term=MSA&utm_content=App"
+    },
+    "duke_kunshan": {
+        "code": "US021",
+        "name": "Duke Kunshan University",
+        "name_cn": "昆山杜克大学",
+        "base_url": "https://graduate.dukekunshan.edu.cn",
+        "list_url": "https://graduate.dukekunshan.edu.cn/",
+        "allowed_domain": "dukekunshan.edu.cn",
+        "apply_register_url": "https://applygp.duke.edu/apply/?sr=d3abd676-a8c1-4bcc-aa53-2603fe10563b",
+        "apply_login_url": "https://applygp.duke.edu/apply/?sr=d3abd676-a8c1-4bcc-aa53-2603fe10563b"
+    },
+    "maryland": {
+        "code": "US043",
+        "name": "University of Maryland, College Park",
+        "name_cn": "马里兰大学帕克分校",
+        "base_url": "https://shadygrove.usmd.edu",
+        "list_url": "https://shadygrove.usmd.edu/academics/degree-programs?f%5B0%5D=level%3AGraduate&items_per_page=100",
+        "allowed_domain": "shadygrove.usmd.edu",
+        "apply_register_url": "N/A", # Application links vary by school
+        "apply_login_url": "N/A"
+    },
+    "emory": {
+        "code": "US044",
+        "name": "Emory University",
+        "name_cn": "埃默里大学",
+        "base_url": "https://www.emory.edu",
+        "list_url": "https://www.emory.edu/home/academics/degrees-programs.html",
+        "allowed_domain": "emory.edu",
+        "apply_register_url": "N/A", # Logic handled in spider
+        "apply_login_url": "N/A"
+    },
+    "vanderbilt": {
+        "code": "US045",
+        "name": "Vanderbilt University",
+        "name_cn": "范德堡大学",
+        "base_url": "https://www.vanderbilt.edu",
+        "list_url": "https://www.vanderbilt.edu/academics/program-finder/?degrees=masters%2Cdoctoral%2Conline",
+        "allowed_domain": "vanderbilt.edu",
+        "apply_register_url": "https://apply.vanderbilt.edu/apply/",
+        "apply_login_url": "https://apply.vanderbilt.edu/apply/"
+    },
+    "indiana_bloomington": {
+        "code": "US060",
+        "name": "Indiana University Bloomington",
+        "name_cn": "印第安纳大学伯明顿分校",
+        "base_url": "https://bloomington.iu.edu",
+        "list_url": "https://bloomington.iu.edu/academics/degrees-majors/index.html?campus=bloomington",
+        "allowed_domain": "iu.edu",
+        "apply_register_url": "https://iugraduate2026.cas.myliaison.com/applicant-ux/#/login",
+        "apply_login_url": "https://iugraduate2026.cas.myliaison.com/applicant-ux/#/login"
+    },
+    "virginia": {
+        "code": "US061",
+        "name": "University of Virginia",
+        "name_cn": "弗吉尼亚大学",
+        "base_url": "https://records.ureg.virginia.edu",
+        "list_url": "https://records.ureg.virginia.edu/content.php?catoid=68&navoid=6160",
+        "allowed_domain": "virginia.edu",
+        "apply_register_url": "https://applycentral.virginia.edu/apply/",
+        "apply_login_url": "https://applycentral.virginia.edu/apply/"
+    },
+    "ucsc": {
+        "code": "US062",
+        "name": "University of California, Santa Cruz",
+        "name_cn": "加州大学圣克鲁兹分校",
+        "base_url": "https://graduateadmissions.ucsc.edu",
+        "list_url": "https://graduateadmissions.ucsc.edu/graduate-programs/",
+        "allowed_domain": "ucsc.edu",
+        "apply_register_url": "https://applygrad.ucsc.edu/apply/",
+        "apply_login_url": "https://applygrad.ucsc.edu/apply/"
+    },
+    "uconn": {
+        "code": "US081",
+        "name": "University of Connecticut",
+        "name_cn": "康涅狄格大学",
+        "base_url": "https://grad.uconn.edu",
+        "list_url": "https://grad.uconn.edu/programs/",
+        "allowed_domain": "uconn.edu",
+        "apply_register_url": "https://connect.grad.uconn.edu/apply/",
+        "apply_login_url": "https://connect.grad.uconn.edu/apply/"
+    },
+    "kansas": {
+        "code": "US082",
+        "name": "University of Kansas",
+        "name_cn": "堪萨斯大学",
+        "base_url": "https://gograd.ku.edu",
+        "list_url": "https://gograd.ku.edu/portal/prog_website",
+        "allowed_domain": "ku.edu",
+        "apply_register_url": "https://gograd.ku.edu/apply/?_gl=1*vxcfti*_gcl_au*MTE2NTY1NDU1OC4xNzY4OTMzNDU2",
+        "apply_login_url": "https://gograd.ku.edu/apply/?_gl=1*vxcfti*_gcl_au*MTE2NTY1NDU1OC4xNzY4OTMzNDU2"
+    },
+    "delaware": {
+        "code": "US091",
+        "name": "University of Delaware",
+        "name_cn": "特拉华大学",
+        "base_url": "https://www.udel.edu",
+        "list_url": "https://www.udel.edu/academics/colleges/grad/prospective-students/programs/",
+        "allowed_domain": "udel.edu",
+        "apply_register_url": "https://grad-admissions.udel.edu/apply/",
+        "apply_login_url": "https://grad-admissions.udel.edu/apply/"
+    },
+    "iowa_state": {
+        "code": "US092",
+        "name": "Iowa State University",
+        "name_cn": "爱荷华州立大学",
+        "base_url": "https://www.grad-college.iastate.edu",
+        "list_url": "https://www.grad-college.iastate.edu/programs?title=&field_program_degrees_offered_target_id=All&field_online_program_value=All&field_coursework_only_value=All&field_interdepartmental_program_value=All&field_program_interest_area_target_id=All&sort_by=title&sort_order=ASC",
+        "allowed_domain": "iastate.edu",
+        "apply_url": "https://apps.admissions.iastate.edu/apply/online/"
+    },
+    "oregon_state": {
+        "code": "US093",
+        "name": "Oregon State University",
+        "name_cn": "俄勒冈州立大学",
+        "base_url": "https://graduate.oregonstate.edu",
+        "list_url": "https://graduate.oregonstate.edu/programs",
+        "allowed_domain": "oregonstate.edu",
+        "apply_url": "https://advanced.oregonstate.edu/portal/gr-app"
+    },
+    "montreal": {
+        "code": "CA007",
+        "name": "Université de Montréal",
+        "name_cn": "蒙特利尔大学",
+        "base_url": "https://admission.umontreal.ca",
+        "list_url": "https://admission.umontreal.ca/en/programs-of-study/",
+        "allowed_domain": "umontreal.ca",
+        "apply_url": "https://admission.umontreal.ca/en/application/"
+    },
+    "calgary": {
+        "code": "CA008",
+        "name": "University of Calgary",
+        "name_cn": "卡尔加里大学",
+        "base_url": "https://grad.ucalgary.ca",
+        "list_url": "https://grad.ucalgary.ca/future-students/graduate/discover-opportunities/explore-programs",
+        "allowed_domain": "ucalgary.ca",
+        "apply_url": "https://cas.ucalgary.ca/cas/login?service=https://apply.ucalgary.ca/StudentAdmission/Login.aspx?AppType=A"
+    },
+    "manitoba": {
+        "code": "CA018",
+        "name": "University of Manitoba",
+        "name_cn": "曼尼托巴大学",
+        "base_url": "http://umanitoba.ca",
+        "list_url": "http://umanitoba.ca/graduate-studies/admissions/programs-of-study",
+        "allowed_domain": "umanitoba.ca",
+        "apply_url": "https://applygrad.umanitoba.ca/apply/"
+    },
+    "guelph": {
+        "code": "CA019",
+        "name": "University of Guelph",
+        "name_cn": "圭尔夫大学",
+        "base_url": "https://www.uoguelph.ca",
+        "list_url": "https://www.uoguelph.ca/programs/graduate",
+        "allowed_domain": "uoguelph.ca",
+        "apply_url": "https://www.ouac.on.ca/apply/guelphgrad/en_CA/user/login"
     }
 }
 

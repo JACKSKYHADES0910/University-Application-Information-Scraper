@@ -69,6 +69,7 @@
 | **Imperial College London** | `spiders/uk/imperial_spider.py` | ✅ Stable | 100% | 英国G5，支持注册/登录链接提取 |
 | **The University of Manchester** | `spiders/uk/manchester_spider.py` | ✅ Stable | 100% | 英国红砖，支持分阶段 Deadline 提取 |
 | **USA Universities** | - | ⏳ TBD | - | 待开发 |
+| **University of Connecticut** | `spiders/usa/uconn_spider.py` | ✅ Stable | 95% | 支持分类筛选与多模式 Deadline 提取 |
 
 ---
 

@@ -38,3 +38,7 @@ output/
 # notebooks / attachments
 attachment/
 .ipynb_checkpoints/
+
+# Private / Internal
+readme/审批事务/
+dev_scripts/

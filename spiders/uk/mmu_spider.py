@@ -285,8 +285,7 @@ class MMUSpider(BaseSpider):
         result = self.create_result_template(item['name'], item['link'])
         
         # 设置统一的申请链接(从配置读取)
-        result["申请注册链接"] = self.university_info.get("apply_register_url", "N/A")
-        result["申请登录链接"] = self.university_info.get("apply_login_url", "N/A")
+        result["申请链接"] = self.university_info.get("apply_register_url", "N/A")
         
         # 从浏览器池获取实例
         with self.browser_pool.get_browser() as driver:

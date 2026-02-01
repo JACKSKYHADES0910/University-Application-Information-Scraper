@@ -237,8 +237,7 @@ class UWASpider(BaseSpider):
                     program_data = self.create_result_template(name, url)
                     
                     # 设置申请链接
-                    program_data["申请注册链接"] = self.apply_register_url
-                    program_data["申请登录链接"] = self.apply_login_url
+                    program_data["申请链接"] = self.apply_register_url
                     
                     # 尝试提取额外信息
                     extra_info = self._extract_extra_info(soup)

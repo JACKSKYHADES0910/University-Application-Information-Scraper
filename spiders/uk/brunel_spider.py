@@ -198,9 +198,8 @@ class BrunelSpider(BaseSpider):
         
         result = self.create_result_template(item['name'], item['link'])
         
-        # 默认使用配置中的统一登录注册链接
-        result["申请注册链接"] = self.university_info.get("apply_register_url", "N/A")
-        result["申请登录链接"] = self.university_info.get("apply_login_url", "N/A")
+        # 默认使用配置中的统一申请链接
+        result["申请链接"] = self.university_info.get("apply_register_url", "N/A")
         
         with self.browser_pool.get_browser() as driver:
             try:
@@ -220,9 +219,8 @@ class BrunelSpider(BaseSpider):
                 # 提取申请链接 (覆盖默认值, 因为 Brunel 每个课程有特定代码)
                 apply_link = self._extract_application_link(driver)
                 if apply_link and apply_link != "N/A":
-                    # 通常直接作为申请注册链接使用, 因为它是特定课程的申请入口
-                    result["申请注册链接"] = apply_link
-                    result["申请登录链接"] = apply_link
+                    # 使用特定课程的申请入口
+                    result["申请链接"] = apply_link
                 
                 # Brunel 的 Deadline 通常不明确或因项目而异，这里留 N/A 或尝试通用提取
                 result["项目deadline"] = "N/A"

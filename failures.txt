@@ -1,0 +1,261 @@
+NAME: Bioinformatics Data Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/bioinformatics-data-science/
+
+NAME: Animal and Food Sciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/animal-food-science/
+
+NAME: Biological Sciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/biological-sciences/
+
+NAME: Art History
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/art-history/
+
+NAME: Applied Artificial Intelligence for Business
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/applied-artificial-intelligence-business/
+
+NAME: Business Analytics and Information Management
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/business-analytics-information-management/
+
+NAME: Artificial Intelligence
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/artificial-intelligence/
+
+NAME: Applied Mathematics
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/applied-mathematics/
+
+NAME: Agricultural and Resource Economics
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/agriculture-resource-economics/
+
+NAME: Africana Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/africana-studies/
+
+NAME: Business Fundamentals Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/business-fundamentals-certificate/
+
+NAME: Accounting
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/accounting/
+
+NAME: Biomechanics and Movement Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/biomechanics-movement-science/
+
+NAME: Climatology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/climatology/
+
+NAME: Chemical Engineering
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/chemical-engineering/
+
+NAME: Childhood Education in Languages, Literatures & Cultures
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/childhood-education-in-languages-literatures-cultures/
+
+NAME: Clinical Exercise Physiology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/clinical-exercise-physiology/
+
+NAME: Communication
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/communication/
+
+NAME: Composites Manufacturing and Engineering Online Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/composite-manufacturing-engineering-online/
+
+NAME: Criminology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/criminology/
+
+NAME: Computer Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/computer-science/
+
+NAME: Computational Science & Engineering Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/computational-science-and-engineering/
+
+NAME: Computer Science Education Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/computer-sci-education-cert/
+
+NAME: Communication Sciences and Disorders Ph.D.
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/communication-sciences-disorders-phd/
+
+NAME: Composite Materials Online Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/composite-materials-online/
+
+NAME: Community Engagement Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/community-engagement-certificate/
+
+NAME: Communication (Master in Strategic Communication Online)
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/strategic-communication/
+
+NAME: Data Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/data-science/
+
+NAME: Cybersecurity Online
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/cybersecurity-online/
+
+NAME: Dietetic Internship Program
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/dietetic-internship/
+
+NAME: Economics
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/economics/
+
+NAME: Education and Social Policy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/education-and-social-policy/
+
+NAME: Educational Statistics and Research Methods
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/educational-statistics-research-methods/
+
+NAME: Electrical & Computer Engineering Online
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/electrical-and-computer-engineering-online/
+
+NAME: Energy and Environmental Policy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/energy-environmental-policy/
+
+NAME: Electrochemical Engineering
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/electrochemical-engineering/
+
+NAME: Exercise Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/exercise-science/
+
+NAME: English
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/english/
+
+NAME: Environmental Economics
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/environmental-economics/
+
+NAME: Epidemiology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/epidemiology/
+
+NAME: Fine Arts
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/fine-arts/
+
+NAME: Evaluation Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/interdisciplinary-evaluation-science/
+
+NAME: Generative AI for Business Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/generative-ai-certificate/
+
+NAME: Geographic Information Science (GIS) Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/gis-certificate/
+
+NAME: Geological Sciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/geology/
+
+NAME: Health Coaching Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/clinical-health-coaching-certificate/
+
+NAME: Finance Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/finance-cert/
+
+NAME: Finance
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/finance/
+
+NAME: Fashion and Apparel Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/fashion-apparel-studies/
+
+NAME: History
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/history/
+
+NAME: Hospitality Business Management
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/hospitality-business-management/
+
+NAME: Human Development and Family Sciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/human-development-family-sciences/
+
+NAME: Italian Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/italian-studies/
+
+NAME: International Business
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/international-business/
+
+NAME: Leadership in Social Innovation
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/leadership-in-social-innovation/
+
+NAME: Leadership in Early Childhood and Human Services Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/leadership-in-early-childhood-human-services/
+
+NAME: Liberal Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/liberal-studies/
+
+NAME: Literacy Online
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/literacy-online/
+
+NAME: M.A. in Languages, Literatures, Cultures and Pedagogy 
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/languages-literatures-cultures-pedagogy/
+
+NAME: Marine Policy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/marine-policy/
+
+NAME: Marine Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/marine-studies/
+
+NAME: Master's of Public Health (MPH)
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/masters-public-health-mph/
+
+NAME: Medical and Molecular Sciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/medical-molecular-sciences/
+
+NAME: Microbiology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/microbiology/
+
+NAME: MBA (Business Administration) Online
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/mba-business-administration-online/
+
+NAME: Molecular Diagnostics Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/molecular-diagnostics/
+
+NAME: Molecular Biosciences
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/molecular-biosciences/
+
+NAME: Minerals, Materials & Society Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/minerals-materials-society/
+
+NAME: Organizational Improvement for Educational Leaders
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/organizational-improvement-education/
+
+NAME: Physical Therapy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/physical-therapy/
+
+NAME: Performing Artist Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/performing-arts-certificate/
+
+NAME: Political Science and International Relations
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/political-science-international-relations/
+
+NAME: Preservation Studies
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/preservation-studies/
+
+NAME: Railroad Engineering Online Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/railroad-engineering-online/
+
+NAME: Public Policy and Administration
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/public-policy-administration/
+
+NAME: Quantitative Systems Pharmacology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/quantitative-systems-pharmacology/
+
+NAME: Quantum Science and Engineering
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/quantum-science-engineering/
+
+NAME: Robotics
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/robotics/
+
+NAME: Social Work
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/social-work/
+
+NAME: Teacher Leadership Online
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/teacher-leadership-online/
+
+NAME: Sociology
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/sociology/
+
+NAME: Strategic Leadership Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/strategic-leadership-cert/
+
+NAME: Statistics Data Science
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/statistics-data-science/
+
+NAME: Technology Product Management Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/technology-product-management/
+
+NAME: Urban Analytics and Policy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/urban-analytics-public-policy/
+
+NAME: Urban Data Science Certificate
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/urban-data-science-cert/
+
+NAME: Water Science & Policy
+URL: https://www.udel.edu/academics/colleges/grad/prospective-students/programs/water-science-policy/
+

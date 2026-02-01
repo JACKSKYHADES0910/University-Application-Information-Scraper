@@ -320,8 +320,7 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
         ("序号", 4),
         ("项目名称", 30),
         ("项目官网链接", 18),
-        ("申请注册链接", 16),
-        ("申请登录链接", 16),
+        ("申请链接", 18),
         ("项目deadline", 22),
     ]
     
@@ -333,13 +332,11 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
     for idx, row in df.iterrows():
         # 处理链接列 - 使用 Text 对象创建可点击链接（避免 markup 解析错误）
         official_link = str(row.get("项目官网链接", "N/A"))
-        register_link = str(row.get("申请注册链接", "N/A"))
-        login_link = str(row.get("申请登录链接", "N/A"))
+        apply_link = str(row.get("申请链接", "N/A"))
         
         # 创建可点击链接（使用 Text 对象，更安全）
         official_display = _create_clickable_link(official_link, "🔗 点击查看")
-        register_display = _create_clickable_link(register_link, "🔗 注册")
-        login_display = _create_clickable_link(login_link, "🔗 登录")
+        apply_display = _create_clickable_link(apply_link, "🔗 申请")
         
         # 项目名称截断并转义
         prog_name_raw = str(row.get("项目名称", ""))
@@ -355,8 +352,7 @@ def _preview_with_rich(df: pd.DataFrame, total_rows: int, preview_rows: int) -> 
             str(idx + 1),
             prog_name,
             official_display,
-            register_display,
-            login_display,
+            apply_display,
             deadline
         )
     

@@ -2,9 +2,11 @@
 """
 美国地区大学爬虫模块
 
-TODO: 待添加美国大学爬虫实现
-可添加的大学示例:
+已实现的大学:
     - 哈佛大学 (Harvard)
+
+TODO: 待添加更多美国大学爬虫实现
+可添加的大学示例:
     - 斯坦福大学 (Stanford)
     - 麻省理工学院 (MIT)
     - 加州大学伯克利分校 (UC Berkeley)
@@ -12,9 +14,15 @@ TODO: 待添加美国大学爬虫实现
     等...
 """
 
-# 当添加新爬虫后，在此处导入
-# from .harvard_spider import HarvardSpider
-# from .stanford_spider import StanfordSpider
+from .harvard_spider import HarvardSpider
+from .mit_spider import MITSpider
+from .stanford_spider import StanfordSpider
+from .nyu_spider import NYUSpider
+from .duke_kunshan_spider import DukeKunshanSpider
+from .maryland_spider import MarylandSpider
+from .ucsc_spider import UCSCSpider
+from .iowa_state_spider import IowaStateSpider
+from .oregon_state_spider import OregonStateSpider
 
-__all__ = []
+__all__ = ["HarvardSpider", "MITSpider", "StanfordSpider", "NYUSpider", "DukeKunshanSpider", "MarylandSpider", "UCSCSpider", "IowaStateSpider", "OregonStateSpider"]
 

@@ -425,3 +425,109 @@ def print_phase_complete(phase_name: str, count: int) -> None:
     else:
         print(f"✅ [{phase_name}] 完成！共锁定 {count} 个项目", flush=True)
 
+
+class SequentialCrawlerProgress:
+    """
+    顺序爬虫进度管理器 (Sequential Progress Manager)
+    
+    专为单线程/顺序执行的爬虫任务设计 (如 Selenium 循环抓取)。
+    支持 rich 进度条和安全的日志打印。
+    
+    使用示例:
+        >>> progress = SequentialCrawlerProgress(title="抓取任务")
+        >>> with progress.create_progress(total=100) as p:
+        ...     for i in range(100):
+        ...         progress.log(f"正在处理 {i}")
+        ...         p.update(advance=1)
+    """
+    
+    def __init__(self, title: str = "任务进度"):
+        self.title = title
+        self.console = _get_console() if RICH_AVAILABLE else None
+        self.progress = None
+        self.task_id = None
+        self.stats = {"success": 0, "fail": 0}
+
+    def create_progress(self, total: int):
+        """
+        创建进度条上下文管理器
+        """
+        if RICH_AVAILABLE and self.console:
+            return self._RichContext(self, total)
+        else:
+            return self._SimpleContext(self, total)
+
+    def log(self, message: str, level: str = "info"):
+        """
+        在进度条上方打印日志，避免破坏进度条显示
+        """
+        if RICH_AVAILABLE and self.progress:
+            style = "white"
+            if level == "success": style = "green"
+            elif level == "warning": style = "yellow"
+            elif level == "error": style = "red"
+            self.progress.console.print(f"[{style}]{message}[/{style}]")
+        else:
+            prefix = "✅" if level == "success" else "❌" if level == "error" else "ℹ️"
+            print(f"{prefix} {message}", flush=True)
+
+    def update(self, advance: int = 1, success: bool = True):
+        """更新进度和统计"""
+        if success:
+            self.stats["success"] += 1
+        else:
+            self.stats["fail"] += 1
+            
+        if RICH_AVAILABLE and self.progress:
+            self.progress.update(
+                self.task_id, 
+                advance=advance,
+                success=self.stats["success"],
+                fail=self.stats["fail"]
+            )
+        else:
+            # Simple text mode update could go here if needed, but usually redundant with logs
+            pass
+
+    class _RichContext:
+        def __init__(self, parent, total):
+            self.parent = parent
+            self.total = total
+        
+        def __enter__(self):
+            self.parent.progress = Progress(
+                SpinnerColumn(),
+                TextColumn("[bold blue]{task.description}"),
+                BarColumn(bar_width=40, complete_style="green", finished_style="bold green"),
+                TaskProgressColumn(),
+                TimeElapsedColumn(),
+                TimeRemainingColumn(),
+                TextColumn("• [green]成功: {task.fields[success]}[/green] [red]失败: {task.fields[fail]}[/red]"),
+                console=self.parent.console,
+                expand=False,
+                transient=False 
+            )
+            self.parent.progress.start()
+            self.parent.task_id = self.parent.progress.add_task(
+                self.parent.title, 
+                total=self.total, 
+                success=0, 
+                fail=0
+            )
+            return self.parent
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            self.parent.progress.stop()
+            self.parent.progress = None
+
+    class _SimpleContext:
+        def __init__(self, parent, total):
+            self.parent = parent
+            self.total = total
+        
+        def __enter__(self):
+            print(f"\n🚀 {self.parent.title} 开始 | 总任务数: {self.total}")
+            return self.parent
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            print(f"\n✅ {self.parent.title} 完成 | 成功: {self.parent.stats['success']} | 失败: {self.parent.stats['fail']}")

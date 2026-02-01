@@ -628,8 +628,7 @@ class DeakinSpider(BaseSpider):
         result["学院/学习领域"] = item.get('study_area', 'N/A')
         
         # 设置统一的申请链接
-        result["申请注册链接"] = self.university_info.get("apply_register_url", "N/A")
-        result["申请登录链接"] = self.university_info.get("apply_login_url", "N/A")
+        result["申请链接"] = self.university_info.get("apply_register_url", "N/A")
         
         # 从浏览器池获取实例
         with self.browser_pool.get_browser() as driver:

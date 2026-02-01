@@ -92,12 +92,9 @@ class BaseSpider(ABC):
         只有在第一次访问时才会创建驱动实例
         """
         if self._driver is None:
-            if console:
-                with console.status("[bold cyan]🌐 正在启动浏览器 (Browser Launching)...", spinner="earth"):
-                    self._driver = get_driver(self.headless)
-            else:
-                print("🌐 正在启动浏览器...")
-                self._driver = get_driver(self.headless)
+            # 简化启动过程，避免 rich console 干扰
+            print("🌐 正在启动浏览器 (Browser Launching)...")
+            self._driver = get_driver(self.headless)
         return self._driver
     
     @property
@@ -137,8 +134,7 @@ class BaseSpider(ABC):
             "项目名称": program_name,
             "学院/学习领域": "N/A",  # 统一字段：Faculty或Study Area
             "项目官网链接": program_link,
-            "申请注册链接": "N/A",
-            "申请登录链接": "N/A",
+            "申请链接": "N/A",
             "项目opendate": "N/A",
             "项目deadline": "N/A",
             "学生案例": "",

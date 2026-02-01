@@ -7,10 +7,14 @@
 import os
 import json
 import random
+import tempfile
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+
+# 解决 SSL 证书验证失败导致无法下载驱动的问题
+os.environ['WDM_SSL_VERIFY'] = '0'
 
 # 缓存 ChromeDriver 路径，避免重复下载检查
 _cached_driver_path = None
@@ -70,88 +74,60 @@ def get_driver(headless: bool = True, fast_mode: bool = True) -> webdriver.Chrom
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--disable-extensions")
     
-    # --- 性能优化配置（核心加速）---
-    chrome_options.add_argument("--disable-logging")
-    chrome_options.add_argument("--log-level=3")  # 只显示致命错误
-    chrome_options.add_argument("--disable-infobars")
-    chrome_options.add_argument("--disable-default-apps")
-    chrome_options.add_argument("--disable-popup-blocking")
-    chrome_options.add_argument("--disable-translate")
-    chrome_options.add_argument("--disable-background-networking")
-    chrome_options.add_argument("--disable-sync")
-    chrome_options.add_argument("--disable-features=TranslateUI")
-    chrome_options.add_argument("--metrics-recording-only")
-    chrome_options.add_argument("--mute-audio")
+    # 关键稳定性配置
+    # chrome_options.add_argument("--remote-debugging-port=0")  # Removed: causing crash on some systems
+    # chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument("--disable-features=VizDisplayCompositor")
     
-    # 禁用渲染加速（减少资源占用）
-    chrome_options.add_argument("--disable-accelerated-2d-canvas")
-    chrome_options.add_argument("--disable-accelerated-jpeg-decoding")
-    chrome_options.add_argument("--disable-accelerated-mjpeg-decode")
-    chrome_options.add_argument("--disable-accelerated-video-decode")
+    # 强制使用唯一临时配置目录，彻底解决冲突
+    # user_data_dir = tempfile.mkdtemp(prefix="chrome_test_")
+    # chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
+    
+    # 基础性能优化
+    chrome_options.add_argument("--disable-infobars")
+    chrome_options.add_argument("--disable-popup-blocking")
+    chrome_options.add_argument("--log-level=3")
     
     # --- 无头模式配置 ---
     if headless:
         # #region agent log
         _debug_log("A", "browser.py:headless", "Using headless mode", {"mode": "headless=new"})
         # #endregion
-        chrome_options.add_argument("--headless=new")  # 使用新版无头模式
-        chrome_options.add_argument("--window-size=1280,720")  # 减小窗口尺寸
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--disable-software-rasterizer")
+        chrome_options.add_argument("--disable-gpu") # Ensure GPU is disabled for stability
     
-    # --- 伪装配置 ---
-    # --- 伪装配置 (随机 User-Agent) ---
-    user_agents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/121.0",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15"
-    ]
-    ua = random.choice(user_agents)
+    # --- 简化的实验性选项 ---
+    # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+    # chrome_options.add_experimental_option("useAutomationExtension", False)
     
-    # #region agent log
-    _debug_log("F", "browser.py:ua_config", "Selected User-Agent", {"ua": ua})
-    # #endregion
-    
-    chrome_options.add_argument(f"user-agent={ua}")
-    
-    # --- 快速模式额外优化 ---
-    prefs = {
-        # 禁止加载图片
-        "profile.managed_default_content_settings.images": 2,
-        # 禁用通知
-        "profile.default_content_setting_values.notifications": 2,
-        # 禁用地理位置
-        "profile.default_content_setting_values.geolocation": 2,
-        # 禁用自动填充
-        "profile.password_manager_enabled": False,
-        "credentials_enable_service": False,
-    }
-    
-    if fast_mode:
-        # 禁用 JavaScript（注意：某些页面可能需要 JS）
-        # prefs["profile.managed_default_content_settings.javascript"] = 2
-        # 禁用字体
-        prefs["profile.managed_default_content_settings.fonts"] = 2
-        # 禁用插件
-        prefs["profile.managed_default_content_settings.plugins"] = 2
-        # 禁用弹窗
-        prefs["profile.managed_default_content_settings.popups"] = 2
-        # 禁用 CSS（可能影响布局判断，谨慎使用）
-        # prefs["profile.managed_default_content_settings.stylesheets"] = 2
-    
-    chrome_options.add_experimental_option("prefs", prefs)
-    
-    # 禁用自动化提示
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
-    chrome_options.add_experimental_option("useAutomationExtension", False)
+    # 基础 prefs - 仅禁用图片以加速
+    # prefs = {
+    #     "profile.managed_default_content_settings.images": 2,
+    # }
+    # chrome_options.add_experimental_option("prefs", prefs)
     
     # --- 创建驱动实例 ---
-    # 缓存 ChromeDriver 路径，避免重复检查
-    if _cached_driver_path is None or not os.path.exists(_cached_driver_path):
-        _cached_driver_path = ChromeDriverManager().install()
-    
-    service = Service(_cached_driver_path)
+    # 使用 webdriver_manager 自动管理驱动 (更稳健)
+    if _cached_driver_path is None or (_cached_driver_path != "AUTO" and not os.path.exists(_cached_driver_path)):
+        try:
+            print("🔍 正在检查/更新 ChromeDriver...")
+            from webdriver_manager.chrome import ChromeDriverManager
+            # Automatic detection
+            _cached_driver_path = ChromeDriverManager().install()
+            print(f"✅ Driver installed at: {_cached_driver_path}")
+        except Exception as e:
+            print(f"⚠️ webdriver_manager failed: {e}. Falling back to Selenium Manager.")
+            _cached_driver_path = "AUTO"
+
+    # 根据模式选择Service
+    if _cached_driver_path == "AUTO":
+        service = None  # 让 Selenium Manager 自动处理
+        print("✅ 将使用 Selenium Manager 自动管理驱动")
+    else:
+        service = Service(_cached_driver_path)
+        print(f"✅ 使用驱动: {_cached_driver_path}")
     
     # #region agent log
     _debug_log("C", "browser.py:before_create", "Creating Chrome driver", {"driver_path": _cached_driver_path})
