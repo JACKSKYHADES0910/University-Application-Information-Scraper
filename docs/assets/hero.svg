@@ -1,0 +1,44 @@
+<svg role="img" aria-labelledby="hero-title hero-desc" width="1280" height="460" viewBox="0 0 1280 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title id="hero-title">University Application Information Scraper</title>
+<desc id="hero-desc">把分散的申请信息，整理成一张表。Python CLI workflow: public admissions pages to school-specific collectors to structured Excel or CSV. 37 school adapters across 5 directory groups. The diagram is an illustration, not a product screenshot.</desc>
+<rect width="1280" height="460" rx="20" fill="#0B2132"/>
+<g>
+<text fill="#8AB5C5" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="2.1px"><tspan x="64" y="62.8636">PYTHON CLI  /  ADMISSIONS DATA</tspan></text>
+<text fill="#F3F8FA" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="51" font-weight="600" letter-spacing="-1.6px"><tspan x="64" y="140.045">University Application&#10;</tspan><tspan x="64" y="201.045">Information Scraper</tspan></text>
+<g>
+<text fill="#D9F5ED" style="white-space: pre" xml:space="preserve" font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, sans-serif" font-size="27" font-weight="500" letter-spacing="0em"><tspan x="64" y="265.8">&#x628a;&#x5206;&#x6563;&#x7684;&#x7533;&#x8bf7;&#x4fe1;&#x606f;&#xff0c;&#x6574;&#x7406;&#x6210;&#x4e00;&#x5f20;&#x8868;&#x3002;</tspan></text>
+<text fill="#9FBAC7" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="17" letter-spacing="0em"><tspan x="64" y="300.682">Public admissions pages &#x2192; structured Excel &#38; CSV.</tspan></text>
+</g>
+</g>
+<rect x="760.5" y="110.5" width="435" height="199" rx="13.5" fill="#112F42"/>
+<rect x="760.5" y="110.5" width="435" height="199" rx="13.5" stroke="#294B5C"/>
+<text fill="#8AB5C5" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="0em"><tspan x="785" y="146.864">WORKFLOW  /  &#x6d41;&#x7a0b;&#x793a;&#x610f;</tspan></text>
+<g>
+<path d="M850 178H808C805.239 178 803 180.239 803 183V220C803 222.761 805.239 225 808 225H850C852.761 225 855 222.761 855 220V183C855 180.239 852.761 178 850 178Z" fill="#163A4D" stroke="#8DB3C1" stroke-width="1.6"/>
+<path d="M803 189H855M813 182.5H814M819 182.5H820M825 182.5H826" stroke="#8DB3C1" stroke-width="2" stroke-linecap="round"/>
+<path d="M828 199H815C813.895 199 813 199.895 813 201C813 202.105 813.895 203 815 203H828C829.105 203 830 202.105 830 201C830 199.895 829.105 199 828 199Z" fill="#C7E0E6"/>
+<path d="M813 210H845M813 217H838" stroke="#7099AA" stroke-width="2" stroke-linecap="round"/>
+<text fill="#E5F2F5" style="white-space: pre" xml:space="preserve" font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, sans-serif" font-size="16" font-weight="500" letter-spacing="0em"><tspan x="800" y="261.4">&#x516c;&#x5f00;&#x5b98;&#x7f51;</tspan></text>
+<text fill="#96B5C2" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="9.5" letter-spacing="0.3px"><tspan x="796.5" y="282.455">PUBLIC PAGES</tspan></text>
+<path d="M896 207H913M908 212L913 207L908 202" stroke="#72BFAA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M998 178H958C953.029 178 949 182.029 949 187V217C949 221.971 953.029 226 958 226H998C1002.97 226 1007 221.971 1007 217V187C1007 182.029 1002.97 178 998 178Z" fill="#12483F" stroke="#67D9B9" stroke-width="1.6"/>
+<path d="M970 194L962 202L970 210M986 194L994 202L986 210M981 191L975 213" stroke="#A2F0D5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<text fill="#E5F2F5" style="white-space: pre" xml:space="preserve" font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, sans-serif" font-size="16" font-weight="500" letter-spacing="0em"><tspan x="946" y="261.4">&#x6309;&#x6821;&#x91c7;&#x96c6;</tspan></text>
+<text fill="#96B5C2" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="9.5" letter-spacing="0.3px"><tspan x="947.5" y="282.455">PYTHON CLI</tspan></text>
+<path d="M1042 207H1059M1054 212L1059 207L1054 202" stroke="#72BFAA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1148 178H1100C1097.24 178 1095 180.239 1095 183V221C1095 223.761 1097.24 226 1100 226H1148C1150.76 226 1153 223.761 1153 221V183C1153 180.239 1150.76 178 1148 178Z" fill="#173C4C" stroke="#95CEC8" stroke-width="1.6"/>
+<path d="M1096 190H1152M1096 202H1152M1096 214H1152M1113 190V225M1133 190V225" stroke="#537C89" stroke-width="1.2"/>
+<path d="M1110 182H1102C1100.9 182 1100 182.895 1100 184C1100 185.105 1100.9 186 1102 186H1110C1111.1 186 1112 185.105 1112 184C1112 182.895 1111.1 182 1110 182Z" fill="#76DEBE"/>
+<path opacity="0.65" d="M1145 182H1119C1117.9 182 1117 182.895 1117 184C1117 185.105 1117.9 186 1119 186H1145C1146.1 186 1147 185.105 1147 184C1147 182.895 1146.1 182 1145 182Z" fill="#76DEBE"/>
+<path d="M1118 196H1127M1118 208H1127M1118 220H1127M1138 196H1146M1138 208H1146M1138 220H1146" stroke="#BBDFDD" stroke-width="2" stroke-linecap="round"/>
+<text fill="#E5F2F5" style="white-space: pre" xml:space="preserve" font-family="Noto Sans SC, Microsoft YaHei, PingFang SC, sans-serif" font-size="16" font-weight="500" letter-spacing="0em"><tspan x="1084" y="261.4">&#x7ed3;&#x6784;&#x5316;&#x8868;&#x683c;</tspan></text>
+<text fill="#96B5C2" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="9.5" letter-spacing="0.3px"><tspan x="1093.5" y="282.455">EXCEL / CSV</tspan></text>
+</g>
+<rect x="64" y="375" width="1152" height="1" fill="#315263"/>
+<g>
+<text fill="#ABC8D3" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="0.8px"><tspan x="64" y="413.864">37 SCHOOL ADAPTERS</tspan></text>
+<text fill="#ABC8D3" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="0.8px"><tspan x="252" y="413.864">5 DIRECTORY GROUPS</tspan></text>
+<text fill="#ABC8D3" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="0.8px"><tspan x="437" y="413.864">EXCEL + CSV</tspan></text>
+</g>
+<text fill="#77D6BB" style="white-space: pre" xml:space="preserve" font-family="Inter, Segoe UI, Arial, Microsoft YaHei, sans-serif" font-size="12" letter-spacing="0.2px"><tspan x="1028" y="413.864">SOURCE &#x2192; COLLECT &#x2192; EXPORT</tspan></text>
+</svg>

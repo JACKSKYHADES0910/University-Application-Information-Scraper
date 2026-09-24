@@ -1,387 +1,323 @@
-# MySpiderProject (Graduate Program Spider)
+<p align="center">
+  <img src="docs/assets/hero.svg" alt="University Application Information Scraper — 把分散的申请信息，整理成一张表。" width="100%" />
+</p>
 
-> **为留学生申请打造的自动化信息抓取与整理工具**  
-> *Automated Graduate Program Information Crawler for Applicants*
+<h1 align="center">University Application Information Scraper</h1>
 
-我们致力于解决手动收集申请信息的繁琐痛点，通过 **Selenium 浏览器自动化 (Browser Automation)** 技术，一键抓取世界知名大学（如 HKU, CUHK）官网的硕士/博士项目详情（包括截止日期 `Deadline`、申请链接 `Apply URL` 等），并经过**数据管道 (Data Pipeline)** 清洗去重，最终输出为标准化的 **Excel** 申请表。
+<p align="center">
+  <strong>大学官网 → 项目信息 → Excel 申请资料表</strong><br />
+  Collect graduate program information. Build your application shortlist.
+</p>
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![License](https://img.shields.io/github/license/JACKSKYHADES0910/MySpiderProject?color=blue)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-![Selenium](https://img.shields.io/badge/Selenium-4.15%2B-43B02A?logo=selenium&logoColor=white)
-[![Last Commit](https://img.shields.io/github/last-commit/JACKSKYHADES0910/MySpiderProject)](https://github.com/JACKSKYHADES0910/MySpiderProject/commits/main)
-[![Issues](https://img.shields.io/github/issues/JACKSKYHADES0910/MySpiderProject)](https://github.com/JACKSKYHADES0910/MySpiderProject/issues)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-168b7b" alt="License: MIT" /></a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&amp;logoColor=white" alt="Python 3.10 or newer recommended" />
+  <a href="requirements.txt"><img src="https://img.shields.io/badge/Selenium-4.15%2B-43b02a?logo=selenium&amp;logoColor=white" alt="Selenium 4.15 or newer" /></a>
+  <a href="#universities"><img src="https://img.shields.io/badge/university_adapters-37-168b7b" alt="37 university adapters in the repository" /></a>
+</p>
 
----
-
-### 🚀 快速导航 (Quick Links)
-[快速开始](#-快速开始-quick-start) | [使用说明](#-使用说明-usage) | [支持学校](#-支持学校矩阵-supported-universities) | [配置](#-配置说明-configuration) | [输出 Schema](#-输出说明--data-schema-output) | [常见问题](#-常见问题-faq--troubleshooting)
-
----
-
-## 📖 目录 (Table of Contents)
-
-<details>
-<summary>👉 点击展开目录 (Click to expand)</summary>
-
-1. [项目技术](#-项目技术-project-technology)
-2. [支持学校矩阵](#-支持学校矩阵-supported-universities)
-3. [快速开始](#-快速开始-quick-start)
-4. [安装](#-安装-installation)
-5. [使用说明](#-使用说明-usage)
-6. [配置说明](#-配置说明-configuration)
-7. [输出说明 & Data Schema](#-输出说明--data-schema-output)
-8. [项目结构](#-项目结构-project-structure)
-9. [工作原理](#-工作原理-how-it-works)
-10. [扩展新学校](#-扩展新学校-add-a-new-spider)
-11. [常见问题](#-常见问题-faq--troubleshooting)
-12. [适合谁](#-适合谁-who-is-this-for)
-13. [合法合规与免责声明](#-合法合规与免责声明-legal--disclaimer)
-14. [License](#-license)
-
-</details>
+<p align="center">
+  <a href="#quick-start">快速开始</a> ·
+  <a href="#output">导出结果</a> ·
+  <a href="#universities">学校列表</a> ·
+  <a href="#configuration">运行配置</a> ·
+  <a href="#contributing">参与改进</a>
+</p>
 
 ---
 
-## ✨ 项目技术 (Project Technology)
+选校时，项目名称、申请入口和截止日期往往分散在不同大学的网页里。这个项目把重复的查找与整理工作交给 Python：读取大学公开页面，按学校提取研究生项目信息，再导出为便于筛选、比较和补充的 Excel 表格。
 
-*   **浏览器池并发 (Browser Pool)**: 内置自定义 `BrowserPool`，复用 Selenium WebDriver 实例，支持多线程高并发抓取详细页（需机器性能支持），大幅提升抓取效率。
-*   **双模式运行**:
-    *   **交互式菜单**: 适合小白用户，按数字选择地区与学校。
-    *   **CLI 参数模式**: 支持 `python main.py cuhk --debug`，适合开发者调试或脚本集成。
-*   **智能去重 (Deduplication)**: 独立的去重模块，基于“项目名 + URL”生成唯一指纹，防止重复写入 Excel。
-*   **深度信息提取**: 能够处理 Hash 路由跳转 (`#tpg`) 和 JS 弹窗详情页，获取隐藏的 `Deadline` 和 `Apply Link`。
-*   **稳健的 Data Pipeline**: 从抓取 (Extract) 到 清洗 (Transform) 再到 导出 (Load)，过程异常捕获，确保单条失败不影响整体写入。
+适合正在整理申请清单的同学，也适合学习 Selenium、网页解析和多站点爬虫组织方式的开发者。通过终端菜单或学校代码运行，无需申请 API Key。
 
----
+> **使用范围：** 仓库包含 37 个已注册的学校适配器；实际可采集的项目、字段和日期取决于学校网页及对应实现。申请信息请回到学校官网复核，尤其是招生年份和截止时间。本工具负责整理信息，不代办或提交申请。
 
-## 🏫 支持学校矩阵 (Supported Universities)
+## 可以做什么
 
-> 目前支持 **37 所大学**，覆盖 5 个地区
-
-<details>
-<summary>🇺🇸 <b>USA (16 所)</b></summary>
-
-| 学校 | Spider | 状态 |
-|:---|:---|:---|
-| Stanford University | `usa/stanford_spider.py` | ✅ Stable |
-| MIT | `usa/mit_spider.py` | ✅ Stable |
-| Harvard University | `usa/harvard_spider.py` | ✅ Stable |
-| NYU | `usa/nyu_spider.py` | ✅ Stable |
-| University of Connecticut | `usa/uconn_spider.py` | ✅ Stable |
-| Vanderbilt University | `usa/vanderbilt_spider.py` | ✅ Stable |
-| Emory University | `usa/emory_spider.py` | ✅ Stable |
-| University of Delaware | `usa/delaware_spider.py` | ✅ Stable |
-| Duke Kunshan University | `usa/duke_kunshan_spider.py` | ✅ Stable |
-| Indiana University Bloomington | `usa/indiana_bloomington_spider.py` | ✅ Stable |
-| Iowa State University | `usa/iowa_state_spider.py` | ✅ Stable |
-| University of Kansas | `usa/kansas_spider.py` | ✅ Stable |
-| University of Maryland | `usa/maryland_spider.py` | ✅ Stable |
-| Oregon State University | `usa/oregon_state_spider.py` | ✅ Stable |
-| UC Santa Cruz | `usa/ucsc_spider.py` | ✅ Stable |
-| University of Virginia | `usa/virginia_spider.py` | ✅ Stable |
-
-</details>
-
-<details>
-<summary>🇬🇧 <b>UK (10 所)</b></summary>
-
-| 学校 | Spider | 状态 |
-|:---|:---|:---|
-| Imperial College London | `uk/imperial_spider.py` | ✅ Stable |
-| University of Manchester | `uk/manchester_spider.py` | ✅ Stable |
-| University of Aberdeen | `uk/aberdeen_spider.py` | ✅ Stable |
-| Brunel University London | `uk/brunel_spider.py` | ✅ Stable |
-| Manchester Metropolitan University | `uk/mmu_spider.py` | ✅ Stable |
-| Queen's University Belfast | `uk/qub_spider.py` | ✅ Stable |
-| Royal Holloway | `uk/royalholloway_spider.py` | ✅ Stable |
-| University of Strathclyde | `uk/strathclyde_spider.py` | ✅ Stable |
-| University of East Anglia | `uk/uea_spider.py` | ✅ Stable |
-| Ulster University | `uk/ulster_spider.py` | ✅ Stable |
-
-</details>
-
-<details>
-<summary>🇭🇰 <b>Hong Kong (4 所)</b></summary>
-
-| 学校 | Spider | 状态 |
-|:---|:---|:---|
-| The University of Hong Kong (HKU) | `hongkong/hku_spider.py` | ✅ Stable |
-| The Chinese University of Hong Kong (CUHK) | `hongkong/cuhk_spider.py` | ✅ Stable |
-| City University of Hong Kong (CityU) | `hongkong/cityu_spider.py` | ✅ Stable |
-| The Hong Kong Polytechnic University (PolyU) | `hongkong/polyu_spider.py` | ✅ Stable |
-
-</details>
-
-<details>
-<summary>🇦🇺 <b>Australia (3 所)</b></summary>
-
-| 学校 | Spider | 状态 |
-|:---|:---|:---|
-| The Australian National University (ANU) | `australia/anu_spider.py` | ✅ Stable |
-| Deakin University | `australia/deakin_spider.py` | ✅ Stable |
-| University of Western Australia | `australia/uwa_spider.py` | ✅ Stable |
-
-</details>
-
-<details>
-<summary>🇨🇦 <b>Canada (4 所)</b></summary>
-
-| 学校 | Spider | 状态 |
-|:---|:---|:---|
-| University of Calgary | `ca/calgary_spider.py` | ✅ Stable |
-| University of Guelph | `ca/guelph_spider.py` | ✅ Stable |
-| University of Manitoba | `ca/manitoba_spider.py` | ✅ Stable |
-| Université de Montréal | `ca/montreal_spider.py` | ✅ Stable |
-
-</details>
-
----
-
-## ⚡ 快速开始 (Quick Start)
-
-**3 分钟跑起来：**
-
-1.  **克隆仓库**
-    ```bash
-    git clone https://github.com/JACKSKYHADES0910/MySpiderProject.git
-    cd MySpiderProject
-    ```
-
-2.  **创建并激活虚拟环境**
-    ```bash
-    # Windows
-    python -m venv venv
-    .\venv\Scripts\activate
-    ```
-
-3.  **安装依赖**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **运行**
-    ```bash
-    python main.py
-    ```
-
----
-
-## 📦 安装 (Installation)
-
-本项目依赖 **Python 3.10+** 和 **Google Chrome**。
-
-### 1. 环境配置
-推荐使用虚拟环境以避免依赖冲突。
-
-**Windows PowerShell:**
-```powershell
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-**macOS / Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 2. 浏览器驱动
-项目使用 `webdriver-manager` 自动管理驱动，您只需确保本机已安装最新版 Google Chrome 浏览器即可，无需手动下载 ChromeDriver。
-
----
-
-## 💻 使用说明 (Usage)
-
-### 1. 交互式模式 (Interactive Mode)
-最简单的使用方式，程序会引导你操作：
-```bash
-python main.py
-```
-*流程：选择地区 (1. Hong Kong) -> 选择学校 (HKU/CUHK) -> 确认运行 -> 自动保存 Excel。*
-
-### 2. 命令行参数模式 (CLI Mode)
-适合开发者调试或脚本调用：
-
-*   **无头模式运行 (Headless)**:
-    ```bash
-    python main.py hku
-    ```
-*   **调试模式 (Debug)**:
-    会弹出浏览器窗口，可观察爬虫点击操作，方便排错：
-    ```bash
-    python main.py hku --debug
-    ```
-
----
-
-## ⚙️ 配置说明 (Configuration)
-
-核心配置位于 `config.py`，关键参数如下：
-
-| 参数 (Key) | 含义 (Meaning) | 默认值 (Default) | 说明 (Notes) |
-| :--- | :--- | :--- | :--- |
-| `MAX_WORKERS` | 最大并发线程数 | `24` | 决定详情页抓取速度，过高可能导致内存溢出或被封 IP |
-| `TIMEOUT` | 请求超时时间 | `15` (s) | 页面加载或元素查找的最大等待时间 |
-| `HEADLESS` | 默认无头模式 | `True` | 默认是否后台静默运行 |
-| `OUTPUT_DIR` | 输出目录 | `"output"` | 结果文件保存路径 |
-| `UNIVERSITY_INFO` | 学校配置字典 | (Dict) | 包含各学校的入口 URL (`list_url`) 及代码配置 |
-
----
-
-## 📊 输出说明 & Data Schema (Output)
-
-### 输出文件
-爬取结果默认保存在 `output/` 文件夹中。
-*   **命名规则**: `{University_Name}_Projects_{Timestamp}.xlsx`
-*   **示例**: `HKU_Projects_20231215_120000.xlsx`
-
-### 数据结构 (Data Schema)
-
-| 字段名 (Column) | 含义 (Meaning) | 来源 (Source) | 可空? | 示例数据 (Example) |
-| :--- | :--- | :--- | :--- | :--- |
-| **学校代码** | 唯一标识 | Config | No | `HK001` |
-| **学校名称** | 大学全称 | Config | No | `The University of Hong Kong` |
-| **项目名称** | 硕士/博士项目名 | Page Title | No | `Master of Science in Computer Science` |
-| **项目官网链接** | 详情页 URL | `href` / Hash | No | `https://hku.hk/tpg/...` |
-| **项目申请链接** | 在线申请页 | "Apply Now" 按钮 | Yes | `https://admissions.hku.hk/apply` |
-| **项目deadline** | 申请截止日 | 详情页文本 | Yes | `Main Round: 12:00 noon (GMT+8), April 14, 2024` |
-| **项目opendate** | 开放申请日 | 详情页文本 | Yes | `September 2023` |
-| **学生案例** | 成功案例 | (Reserved) | Yes | (Empty) |
-| **面试问题** | 面试真题 | (Reserved) | Yes | (Empty) |
-
----
-
-## 🏗️ 项目结构 (Project Structure)
-
-```text
-MySpiderProject/
-├── config.py               # [配置] 全局参数 (并发数, User-Agent, 学校信息)
-├── main.py                 # [入口] 程序主入口, 负责 CLI 解析与交互逻辑
-├── requirements.txt        # [依赖] 项目依赖库列表
-├── spiders/                # [核心] 各大学爬虫逻辑实现
-│   ├── base_spider.py      #    -> BaseSpider 基类 (定义接口, 资源管理)
-│   ├── hongkong/           #    -> 香港地区
-│   │   ├── hku_spider.py   #    -> HKU 具体实现
-│   │   └── cuhk_spider.py  #    -> CUHK 具体实现
-│   └── ...                 #    -> 扩展其他地区
-├── utils/                  # [工具] 通用功能模块
-│   ├── browser.py          #    -> Webdriver 初始化与配置
-│   ├── selenium_utils.py   #    -> BrowserPool (对象池) & 常用 Selenium 操作封装
-│   ├── data_saver.py       #    -> Excel/CSV 保存与预览逻辑
-│   ├── deduplicator.py     #    -> 数据去重算法
-│   └── progress.py         #    -> 进度条控制
-└── output/                 # [产物] 抓取结果存放目录
-```
-
----
-
-## 🛠️ 工作原理 (How it works)
-
-本爬虫采用了经典的 **Producer-Consumer (生产者-消费者)** 模式，结合 **ETL (Extract-Transform-Load)** 架构设计，确保数据抓取的高效性与稳定性。
+| 能力 | 带来的帮助 |
+| --- | --- |
+| **按学校采集** | 通过地区菜单选择学校，或直接输入 `hku`、`cuhk`、`imperial` 等代码 |
+| **处理动态网页** | 使用 Selenium 加载页面；不同适配器按需处理列表、详情页、分页或弹窗 |
+| **统一导出字段** | 将学校、项目、学院或学习领域、官网链接、申请入口和日期整理到同一份表格 |
+| **预览后保存** | 在终端查看前 10 条结果，再确认是否导出 Excel |
+| **按站点扩展** | 复用 `BaseSpider`、浏览器工具、数据保存与去重工具，为新学校添加解析逻辑 |
 
 ```mermaid
-flowchart TD
-    Start([Start]) --> Config[Load Config & Args]
-    Config --> Select{Select University}
-    
-    Select -->|Route| Init[Init Spider & BrowserPool]
-    
-    subgraph "Stage 1: Producer (Discovery)"
-        Init --> ListPage[Fetch List Page]
-        ListPage --> Extract[Extract Links / Hashes]
-    end
-    
-    subgraph "Stage 2: Consumer (Concurrency)"
-        Extract --> Queue((Task Queue))
-        Queue -->|Distribute| Worker1[Browser Worker 1]
-        Queue -->|Distribute| Worker2[Browser Worker 2]
-        
-        Worker1 -->|Fetch Details| Parse[Parse Fields]
-        Worker2 -->|Fetch Details| Parse
-    end
-    
-    Parse --> Dedupe{Deduplication}
-    Dedupe -->|Unique| Save[Save to Excel]
-    Dedupe -->|Duplicate| Skip(Skip)
-    
-    Save --> End([End])
+flowchart LR
+  A[选择学校] --> B[读取官网列表]
+  B --> C[按站点提取项目信息]
+  C --> D[终端预览]
+  D --> E[确认导出 Excel]
+  E --> F[筛选比较与官网复核]
+  style A fill:#edf8f5,stroke:#168b7b,color:#153b35
+  style E fill:#edf8f5,stroke:#168b7b,color:#153b35
 ```
 
-### 核心流程解析
+<a id="quick-start"></a>
 
-1.  **🚀 初始化 (Initialization)**: 加载 user-agent 配置，启动 `BrowserPool` 并预热浏览器实例，减少运行时开销。
-2.  **📑 列表发现 (Producer)**: 访问学校官网列表页（如 `Programme Listing`），解析出所有项目的 URL 或 Hash ID，推入任务队列。
-3.  **⚡ 并发采集 (Consumer)**:
-    *   多线程从 `BrowserPool` 中借用浏览器实例。
-    *   针对 Hash 路由或弹窗页面，模拟 JS 点击与滚动。
-    *   智能等待页面渲染，提取 `Deadline` 和 `Apply Link`。
-4.  **✨ 清洗与去重 (ETL)**: 标准化字段格式（移除空白/HTML标签），利用 `URL + Title` 复合键进行去重，确保数据唯一。
-5.  **💾 持久化 (Storage)**: 最终数据被结构化写入 `output/` 目录下的 Excel 文件中。
+## 快速开始
 
----
+建议准备 **Python 3.10 或更新版本**、**Google Chrome** 和 Git，并确保网络可以访问目标学校网站及浏览器驱动下载服务。使用虚拟环境安装依赖。
 
-## ➕ 扩展新学校 (Add a New Spider)
+### 1. 获取项目
 
-只需简单的 **3 步** 即可扩展新爬虫：
-
-1.  **配置**: 在 `config.py` 的 `UNIVERSITY_INFO` 中添加学校 Key 和基本 URL。
-2.  **实现**: 在 `spiders/` 下新建文件（如 `usa/mit_spider.py`），继承 `BaseSpider` 并实现 `run()` 方法。
-3.  **注册**: 在 `main.py` 的 `SPIDER_REGISTRY` 中导入并注册你的类。
-
-```python
-# spiders/usa/mit_spider.py 示例
-from spiders.base_spider import BaseSpider
-
-class MITSpider(BaseSpider):
-    def run(self):
-        # 1. 获取列表
-        # 2. 并发抓取详情
-        # 3. 返回 items 列表
-        return self.results
+```bash
+git clone https://github.com/JACKSKYHADES0910/University-Application-Information-Scraper.git
+cd University-Application-Information-Scraper
 ```
 
----
+### 2. 安装并启动
 
-## ❓ 常见问题 (FAQ / Troubleshooting)
+**Windows PowerShell**
 
-**Q: 报错 `SessionNotCreatedException`?**
-A: 本地 Chrome 浏览器版本与 Driver 不兼容。请运行 `pip install --upgrade webdriver-manager` 更新并确保 Chrome 是最新版。
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe main.py
+```
 
-**Q: 有些学校抓取特别慢？**
-A: `config.py` 默认并发数 `MAX_WORKERS=24`，如果您的电脑配置较低或网速较慢，请适当降低该值（如 8 或 4）。
+<details>
+<summary><strong>macOS / Linux</strong></summary>
 
-**Q: 为什么生成的 Excel 里申请链接是 "N/A"?**
-A: 可能是该项目官网结构变更，或者通过简单的静态解析无法获取（如需要登录）。您可以尝试使用 `--debug` 模式观察浏览器行为。
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python main.py
+```
 
-**Q: 出现 `TimeoutException` 或元素找不到？**
-A: 网络波动或页面加载过慢。尝试在 `config.py` 中增加 `TIMEOUT` 和 `PAGE_LOAD_WAIT` 的值。
+</details>
 
----
+程序会依次提示：**选择地区 → 输入学校代码 → 确认开始 → 预览结果 → 确认保存**。成功导出的文件位于 `output/`。首次启动浏览器时会尝试自动下载 ChromeDriver，请为驱动下载预留时间。
 
-## 👥 适合谁 (Who is this for)
+### 3. 直接指定学校
 
-*   **留学生 / 申请人**: 告别手动 Excel 整理，一键获取最新的 Program List 和 DDl，高效管理申请时间线。
-*   **Python 初学者**: 学习一个结构完整、包含 **并发 (Concurrency)**、**浏览器自动化 (Selenium)** 和 **数据管道** 的真实爬虫项目。
+以下示例使用当前环境的 `python`；Windows 未激活虚拟环境时，请将其替换为 `.\.venv\Scripts\python.exe`。
 
----
+```bash
+# 查看命令帮助
+python main.py --help
 
-<!-- Sections Removed: Roadmap, Contributing, Versioning -->
+# 指定香港大学，默认在后台运行浏览器
+python main.py hku
 
----
+# 显示主浏览器窗口，观察香港中文大学页面的采集过程
+python main.py cuhk --debug
+```
 
-## ⚖️ 合法合规与免责声明 (Legal & Disclaimer)
+**指定学校代码后仍会询问是否开始及是否保存。** 当前命令行入口适合有人值守的运行；没有免确认或批量执行参数。部分适配器的详情页浏览器池使用独立设置，`--debug` 不一定会显示所有浏览器窗口。
 
-1.  **学习研究用途**: 本项目仅供 Python 编程学习与个人申请资料整理使用。
-2.  **遵守 Robots**: 使用时请自觉遵守目标网站的 `robots.txt` 协议，合理控制请求频率（可调整 `TIMEOUT`），避免对目标服务器造成压力。
-3.  **版权声明**: 抓取的数据内容版权归原学校所有，请勿用于商业用途或大规模分发。
-4.  **免责**: 开发者不对使用本工具导致的任何法律后果（如 IP 被封禁）负责。
+<a id="output"></a>
 
----
+## 导出结果
 
-## 📄 License
+默认文件名采用 **`学校代码 学校英文名称.xlsx`**，例如：
 
-[MIT](LICENSE) © [JACKSKYHADES0910](https://github.com/JACKSKYHADES0910)
+```text
+output/
+└── HK001 The University of Hong Kong.xlsx
+```
+
+同一学校再次保存会覆盖同名文件；需要保留不同批次时，请先移动或重命名已有结果。没有采集到数据时不会生成结果文件。保存模块也提供 CSV 导出，并在缺少 Excel 支持库时尝试回退到 CSV。
+
+表格固定包含以下 **10 个字段**，顺序与 [`config.py`](config.py) 中的 `EXCEL_COLUMNS` 一致：
+
+| 字段 | 内容 |
+| --- | --- |
+| `学校代码` | 配置中的学校标识，例如 `HK001` |
+| `学校名称` | 配置中的学校英文名称 |
+| `项目名称` | 适配器提取的课程或学位项目名称 |
+| `学院/学习领域` | 页面提供的学院、学科或学习领域分类 |
+| `项目官网链接` | 用于回溯信息来源的项目详情页 |
+| `申请链接` | 项目申请入口；部分学校使用统一申请门户 |
+| `项目opendate` | 申请开放日期或相关文本 |
+| `项目deadline` | 截止日期、轮次或相关文本 |
+| `学生案例` | 预留字段 |
+| `面试问题` | 预留字段 |
+
+日期保留各适配器提取的文本，不保证统一为标准日期格式；不同项目也可能存在多轮申请。缺失值可能表现为空白、`N/A` 或适配器给出的提示，不能视为“无截止日期”。
+
+<a id="universities"></a>
+
+## 学校列表
+
+以下数量以 [`main.py`](main.py) 中已注册的适配器为准。**“已注册”表示仓库中包含实现，不代表所有学校当前均已通过在线采集验证。** 站点改版后可能需要调整入口或解析规则。
+
+| 代码分组 | 数量 | 示例学校 |
+| --- | ---: | --- |
+| 香港 `hongkong/` | 4 | HKU、CUHK、CityU、PolyU |
+| 英国 `uk/` | 10 | Imperial、Manchester、Queen's Belfast |
+| 美国及昆山杜克 `usa/` | 16 | Stanford、MIT、Harvard、Duke Kunshan |
+| 澳大利亚 `australia/` | 3 | ANU、Deakin、UWA |
+| 加拿大 `ca/` | 4 | Calgary、Guelph、Manitoba、Montréal |
+
+<details>
+<summary><strong>香港 · 4 所</strong></summary>
+
+| 学校 | 命令代码 | 实现 |
+| --- | --- | --- |
+| The University of Hong Kong | `hku` | [查看](spiders/hongkong/hku_spider.py) |
+| The Chinese University of Hong Kong | `cuhk` | [查看](spiders/hongkong/cuhk_spider.py) |
+| City University of Hong Kong | `cityu` | [查看](spiders/hongkong/cityu_spider.py) |
+| The Hong Kong Polytechnic University | `polyu` | [查看](spiders/hongkong/polyu_spider.py) |
+
+</details>
+
+<details>
+<summary><strong>英国 · 10 所</strong></summary>
+
+| 学校 | 命令代码 | 实现 |
+| --- | --- | --- |
+| Imperial College London | `imperial` | [查看](spiders/uk/imperial_spider.py) |
+| University of Manchester | `manchester` | [查看](spiders/uk/manchester_spider.py) |
+| University of Aberdeen | `aberdeen` | [查看](spiders/uk/aberdeen_spider.py) |
+| Brunel University London | `brunel` | [查看](spiders/uk/brunel_spider.py) |
+| Manchester Metropolitan University | `mmu` | [查看](spiders/uk/mmu_spider.py) |
+| Queen's University Belfast | `qub` | [查看](spiders/uk/qub_spider.py) |
+| Royal Holloway, University of London | `royalholloway` | [查看](spiders/uk/royalholloway_spider.py) |
+| University of Strathclyde | `strathclyde` | [查看](spiders/uk/strathclyde_spider.py) |
+| University of East Anglia | `uea` | [查看](spiders/uk/uea_spider.py) |
+| Ulster University | `ulster` | [查看](spiders/uk/ulster_spider.py) |
+
+</details>
+
+<details>
+<summary><strong>美国及昆山杜克 · 16 所</strong></summary>
+
+昆山杜克大学位于中国江苏；这里沿用仓库现有的 `usa/` 目录分组，方便查找实现。
+
+| 学校 | 命令代码 | 实现 |
+| --- | --- | --- |
+| Stanford University | `stanford` | [查看](spiders/usa/stanford_spider.py) |
+| Massachusetts Institute of Technology | `mit` | [查看](spiders/usa/mit_spider.py) |
+| Harvard University | `harvard` | [查看](spiders/usa/harvard_spider.py) |
+| New York University | `nyu` | [查看](spiders/usa/nyu_spider.py) |
+| University of Connecticut | `uconn` | [查看](spiders/usa/uconn_spider.py) |
+| Vanderbilt University | `vanderbilt` | [查看](spiders/usa/vanderbilt_spider.py) |
+| Emory University | `emory` | [查看](spiders/usa/emory_spider.py) |
+| University of Delaware | `delaware` | [查看](spiders/usa/delaware_spider.py) |
+| Duke Kunshan University | `duke_kunshan` | [查看](spiders/usa/duke_kunshan_spider.py) |
+| Indiana University Bloomington | `indiana_bloomington` | [查看](spiders/usa/indiana_bloomington_spider.py) |
+| Iowa State University | `iowa_state` | [查看](spiders/usa/iowa_state_spider.py) |
+| University of Kansas | `kansas` | [查看](spiders/usa/kansas_spider.py) |
+| University of Maryland | `maryland` | [查看](spiders/usa/maryland_spider.py) |
+| Oregon State University | `oregon_state` | [查看](spiders/usa/oregon_state_spider.py) |
+| University of California, Santa Cruz | `ucsc` | [查看](spiders/usa/ucsc_spider.py) |
+| University of Virginia | `virginia` | [查看](spiders/usa/virginia_spider.py) |
+
+</details>
+
+<details>
+<summary><strong>澳大利亚 · 3 所</strong></summary>
+
+| 学校 | 命令代码 | 实现 |
+| --- | --- | --- |
+| Australian National University | `anu` | [查看](spiders/australia/anu_spider.py) |
+| Deakin University | `deakin` | [查看](spiders/australia/deakin_spider.py) |
+| University of Western Australia | `uwa` | [查看](spiders/australia/uwa_spider.py) |
+
+</details>
+
+<details>
+<summary><strong>加拿大 · 4 所</strong></summary>
+
+| 学校 | 命令代码 | 实现 |
+| --- | --- | --- |
+| University of Calgary | `calgary` | [查看](spiders/ca/calgary_spider.py) |
+| University of Guelph | `guelph` | [查看](spiders/ca/guelph_spider.py) |
+| University of Manitoba | `manitoba` | [查看](spiders/ca/manitoba_spider.py) |
+| Université de Montréal | `montreal` | [查看](spiders/ca/montreal_spider.py) |
+
+</details>
+
+<a id="configuration"></a>
+
+## 运行配置
+
+通用配置位于 [`config.py`](config.py)。部分适配器有自己的等待、重试或并发设置，调整前请同时查看对应学校的实现。
+
+| 配置 | 仓库默认值 | 用途 |
+| --- | --- | --- |
+| `MAX_WORKERS` | `24` | 引用此配置的适配器使用的并发数；首次运行可按机器资源调低 |
+| `TIMEOUT` | `15` 秒 | 通用等待超时配置 |
+| `PAGE_LOAD_WAIT` | `20` 秒 | 通用页面加载等待配置 |
+| `MAX_RETRIES` | `3` | 通用重试配置 |
+| `OUTPUT_DIR` | `"output"` | 默认结果保存目录 |
+| `UNIVERSITY_INFO` | 学校配置字典 | 学校代码、名称、入口地址与域名等信息 |
+
+主浏览器默认以无头模式运行，使用 `--debug` 显示窗口。并发数越高，浏览器资源占用通常越大；降低并发可减少同时发起的访问，`TIMEOUT` 是等待上限，并非请求间隔。
+
+## 项目结构
+
+```text
+University-Application-Information-Scraper/
+├── main.py                 # 交互菜单、命令行参数与学校注册表
+├── config.py               # 学校入口、通用配置与导出字段
+├── requirements.txt        # Python 依赖
+├── spiders/
+│   ├── base_spider.py       # 适配器基类与资源管理
+│   ├── hongkong/            # 香港学校适配器
+│   ├── uk/                 # 英国学校适配器
+│   ├── usa/                # 美国学校与昆山杜克适配器
+│   ├── australia/          # 澳大利亚学校适配器
+│   └── ca/                 # 加拿大学校适配器
+├── utils/
+│   ├── browser.py          # Chrome 驱动初始化
+│   ├── selenium_utils.py   # 浏览器池与常用操作
+│   ├── data_saver.py       # 表格预览、Excel / CSV 保存
+│   ├── deduplicator.py     # 去重工具
+│   ├── deep_crawler.py     # 深度页面采集辅助
+│   └── progress.py         # 进度显示
+└── output/                 # 运行后生成的结果，不纳入版本管理
+```
+
+具体采集流程由各学校适配器实现。浏览器池、并发和去重工具按需使用，并非所有学校共享完全相同的处理流程。
+
+## 常见问题
+
+<details>
+<summary><strong>浏览器没有启动，或提示 SessionNotCreatedException</strong></summary>
+
+确认已安装 Chrome，并检查浏览器与驱动版本是否匹配。首次运行需要访问驱动下载服务；下载失败时先检查网络。项目会先尝试 `webdriver-manager`，失败后再尝试 Selenium Manager。使用 `--debug` 可观察主浏览器是否成功启动。
+
+</details>
+
+<details>
+<summary><strong>运行较慢、内存占用高，或出现 TimeoutException</strong></summary>
+
+先单独运行一所学校，并打开 `--debug` 观察页面。对使用全局并发配置的适配器，可调低 `MAX_WORKERS`；对加载较慢的页面，检查实际使用的等待配置。网站入口或结构发生变化时，单纯增加超时不能修复解析规则。
+
+</details>
+
+<details>
+<summary><strong>日期或申请链接为空，或者没有采集到项目</strong></summary>
+
+先打开目标学校官网，确认相关信息是否公开、入口是否变化，再检查对应适配器。不同页面的公开信息并不一致；空值不代表项目不招生。提交问题时请附学校代码、页面链接、运行命令和去除个人信息后的报错。
+
+</details>
+
+<details>
+<summary><strong>没有找到导出文件，或保存失败</strong></summary>
+
+确认程序已采集到数据，且在“是否保存到 Excel”提示时没有选择 `n`。默认从仓库根目录运行时，结果位于 `output/`。如果同名文件正在被 Excel 打开，请关闭后再保存；保留旧批次前请先备份同名文件。
+
+</details>
+
+<a id="contributing"></a>
+
+## 参与改进
+
+欢迎通过 [Issues](https://github.com/JACKSKYHADES0910/University-Application-Information-Scraper/issues) 反馈站点改版、缺失字段或文档问题，也欢迎提交 Pull Request。可复现的问题描述应包含学校代码、目标页面、运行命令、Python / Chrome 版本，以及预期结果和实际结果。
+
+添加新学校时：
+
+1. 在 `config.py` 的 `UNIVERSITY_INFO` 中添加学校信息和公开页面入口。
+2. 在对应 `spiders/` 目录中继承 `BaseSpider`，提供接收 `headless` 的构造函数，将学校配置键（如 `hku`）传给基类，并实现 `run()`，返回符合导出字段的数据列表。
+3. 在 `main.py` 中导入并加入 `SPIDER_REGISTRY`，同时将学校代码加入 `print_region_universities()` 对应的地区列表；新增地区时还需更新 `REGION_INFO`。
+4. 验证页面解析、缺失字段处理和导出结果，并更新本页学校列表。请说明实际验证的学校与页面范围。
+
+## 使用约定与许可
+
+访问学校网站时，请遵守其访问规则、`robots.txt` 和使用条款，合理控制频率。采集结果仅用于信息整理，学校官网始终是申请要求与时间安排的最终依据。
+
+项目代码采用 [MIT License](LICENSE)。学校网页及其内容的权利归原权利人所有，代码许可不等于对第三方内容的授权。
